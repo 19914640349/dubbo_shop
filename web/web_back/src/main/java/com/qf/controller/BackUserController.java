@@ -2,6 +2,7 @@ package com.qf.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qf.entity.BackUser;
+import com.qf.entity.Role;
 import com.qf.service.IBackUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +49,11 @@ public class BackUserController {
         return "redirect:/backUser/userList";
     }
 
+    /**
+     * 删除职工
+     * @param id
+     * @return
+     */
     @RequestMapping("/deleteBackUser/{id}")
     public String deleteBackUser(@PathVariable Integer id){
         backUserService.deleteBackUser(id);

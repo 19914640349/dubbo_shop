@@ -49,4 +49,5 @@ public class BackUserServiceImpl implements IBackUserService {
     public void deleteBackUser(Integer id) {
         backUserMapper.deleteById(id);
     }
+
 }

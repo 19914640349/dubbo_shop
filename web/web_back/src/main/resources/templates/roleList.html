@@ -38,26 +38,24 @@
                     <tr>
                         <th><input class="check-all" type="checkbox"/></th>
                         <th>编号</th>
-                        <th>用户名</th>
-                        <th>姓名</th>
-                        <th>性别</th>
-                        <th>入职时间</th>
+                        <th>职位</th>
+                        <th>角色别名</th>
+                        <th>添加时间</th>
                         <th>操作</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    <tr th:each="user : ${users}">
+                    <tr th:each="role : ${roles}">
                         <td><input type="checkbox"/></td>
-                        <td th:text="${user.id}">Lorem ipsum dolor</td>
-                        <td th:text="${user.username}"><a href="#" title="title">Sit amet</a></td>
-                        <td th:text="${user.name}">Consectetur adipiscing</td>
-                        <td th:text="${user.sex == 1?'男':'女'}">Donec tortor diam</td>
-                        <td th:text="${#dates.format(user.createtime,'yyyy-MM-dd')}">Consectetur time</td>
+                        <td th:text="${role.id}">Lorem ipsum dolor</td>
+                        <td th:text="${role.roleName}"><a href="#" title="title">Sit amet</a></td>
+                        <td th:text="${role.roleAlias}">Lorem ipsum dolor</td>
+                        <td th:text="${#dates.format(role.createTime,'yyyy-MM-dd')}">Consectetur time</td>
                         <td>
                             <!-- Icons --> <a href="#" title="Edit"><img
                                 src="resources/images/icons/pencil.png" alt="Edit"/></a> <a
-                                th:href="|/backUser/deleteBackUser/${user.id}|" title="Delete">&nbsp;<img
+                                href="#" title="Delete">&nbsp;<img
                                 src="resources/images/icons/cross.png" alt="Delete"/></a> <a
                                 href="#" title="Edit Meta">&nbsp;<img
                                 src="resources/images/icons/hammer_screwdriver.png"
@@ -76,7 +74,7 @@
                                     <option value="option1">Choose an action...</option>
                                     <option value="option2">Edit</option>
                                     <option value="option3">Delete</option>
-                                </select> <a class="mybutton" id="open_dialog">添加员工</a>
+                                </select> <a class="mybutton" id="open_dialog">添加职位</a>
                             </div>
                             <div class="pagination">
                                 <a href="#" title="First Page">&laquo; First</a><a href="#"
@@ -108,7 +106,7 @@
     $(function () {
         $("#open_dialog").click(function () {
             $("#dialog_div").dialog({
-                title: "添加员工",
+                title: "添加职位",
                 width: 400,
                 height: 300,
                 modal: true
@@ -118,11 +116,9 @@
 </script>
 <!-- 代表一个弹出框 - 默认隐藏 -->
 <div id="dialog_div" style="display: none;">
-    <form action="/backUser/addBackUser" method="post">
-        用户名:<input name="username"/><br/>
-        密码:<input name="password" type="password" value="12345678"/><br/>
-        姓名:<input name="name"/><br/>
-        性别：<input type="radio" value="1" name="sex" checked/>男 <input type="radio" name="sex" value="0"/>女<br/>
+    <form action="/role/addRole" method="post">
+        职位:<input name="roleName"/><br/>
+        别名:<input name="roleAlias"/><br/>
         <button type="submit">添加</button>
     </form>
 </div>
