@@ -9,4 +9,6 @@ public interface IRoleService {
     List<Role> queryAllRole();
 
     void addRole(Role role);
+
+    List<Role> queryRolesByUid(Integer uid);
 }

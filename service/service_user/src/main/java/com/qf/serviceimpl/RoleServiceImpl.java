@@ -39,4 +39,14 @@ public class RoleServiceImpl implements IRoleService {
     public void addRole(Role role) {
         roleMapper.insert(role);
     }
+
+    /**
+     * 根据用户的id查询所有角色并拥有哪些
+     * @param uid
+     * @return
+     */
+    @Override
+    public List<Role> queryRolesByUid(Integer uid) {
+        return roleMapper.queryRolesByUid(uid);
+    }
 }

@@ -6,6 +6,7 @@ import com.qf.service.IRoleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -45,6 +46,17 @@ public class RoleController {
     public String addRole(Role role){
         roleService.addRole(role);
         return "redirect:/role/roleList";
+    }
+
+    /**
+     * 根据用户的id查询所有角色并拥有哪些
+     * @param uid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/ajaxRoleList")
+    public List<Role> ajaxRoleList(Integer uid){
+        return roleService.queryRolesByUid(uid);
     }
 
 }

@@ -120,7 +120,7 @@
 
         // 弹出父权限选择框
         $("#btn").click(function () {
-            // 是指弹窗样式
+            // 开启弹窗
             $("#ztree_dialog").dialog({
                 title: "选择父权限",
                 width: 200,
@@ -169,7 +169,7 @@
             // 通过ajax查询数据库
             $.post("/power/ajaxPowerList",function (data) {
                 //生成树形结构 参数1:选择要生成的地方 参数2:ztree的核心配置 参数3:json数据
-                var zTreeObject = $.fn.zTree.init($("#ztreeDiv"), setting, data);
+                var zTreeObject = $.fn.zTree.init($("#ztree_div"), setting, data);
                 // 展开所有节点
                 zTreeObject.expandAll(true);
             },"json");
@@ -193,7 +193,7 @@
 <!-- 父权限选择的弹出框 -->
 <div id="ztree_dialog" style="display: none;">
     <!-- ztree展示的容器 -->
-    <div id="ztreeDiv" class="ztree"></div>
+    <div id="ztree_div" class="ztree"></div>
 </div>
 
 </body>

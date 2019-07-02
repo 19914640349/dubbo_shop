@@ -37,4 +37,8 @@ public class Role implements Serializable {
 
     private Integer status;
 
+    // 设置用户角色时选中
+    @TableField(exist = false)
+    private boolean checked;
+
 }
