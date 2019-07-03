@@ -9,4 +9,6 @@ public interface IPowerService {
     List<Power> queryAllPower();
 
     void addPower(Power power);
+
+    List<Power> queryPowersByRid(Integer rid);
 }

@@ -1,10 +1,14 @@
 package com.qf.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qf.dao.BackUserMapper;
+import com.qf.dao.UserRoleTableMapper;
 import com.qf.entity.BackUser;
+import com.qf.entity.UserRoleTable;
 import com.qf.service.IBackUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +25,9 @@ public class BackUserServiceImpl implements IBackUserService {
 
     @Autowired
     private BackUserMapper backUserMapper;
+
+    @Autowired
+    private UserRoleTableMapper userRoleTableMapper;
 
     /**
      * 查询所有后台职工信息
@@ -48,6 +55,26 @@ public class BackUserServiceImpl implements IBackUserService {
     @Override
     public void deleteBackUser(Integer id) {
         backUserMapper.deleteById(id);
+    }
+
+    /**
+     * 修改员工角色
+     * @param uid
+     * @param rid
+     */
+    @Override
+    @Transactional
+    public void updateUserRoles(Integer uid, Integer[] rid) {
+        //根据用户id删除用户和角色的所有关系
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("uid",uid);
+        userRoleTableMapper.delete(queryWrapper);
+
+        //将重新选择的角色保存
+        for (Integer roleid : rid) {
+            UserRoleTable userRoleTable = new UserRoleTable(uid,roleid);
+            userRoleTableMapper.insert(userRoleTable);
+        }
     }
 
 }

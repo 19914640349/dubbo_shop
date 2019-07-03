@@ -43,4 +43,7 @@ public class Power implements Serializable {
     @TableField(exist = false, value = "parentname")
     private String parentName;
 
+    @TableField(exist = false)
+    private boolean checked;
+
 }

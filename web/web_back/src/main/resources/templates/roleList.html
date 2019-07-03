@@ -26,6 +26,10 @@
     <script type="text/javascript" src="resources/widget/dialog/jquery-ui-1.9.2.custom.min.js"></script>
     <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 
+    <!-- 添加树形结构插件 ztree -->
+    <script type="text/javascript" src="resources/widget/zTree/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="resources/widget/zTree/zTreeStyle/zTreeStyle.css">
+
 </head>
 <body>
 <div id="main-content">
@@ -57,7 +61,7 @@
                                 src="resources/images/icons/pencil.png" alt="Edit"/></a> <a
                                 href="#" title="Delete">&nbsp;<img
                                 src="resources/images/icons/cross.png" alt="Delete"/></a> <a
-                                href="#" title="Edit Meta">&nbsp;<img
+                                th:onclick="|updateRolePower(${role.id})|" title="Edit Meta">&nbsp;<img
                                 src="resources/images/icons/hammer_screwdriver.png"
                                 alt="Edit Meta"/></a>
                         </td>
@@ -113,6 +117,48 @@
             });
         })
     })
+
+    // 修改角色的权限
+    function updateRolePower(rid) {
+
+        // 开启弹窗
+        $("#ztree_dialog").dialog({
+            title: "选择权限",
+            width: 200,
+            height: 300,
+            modal: true
+        })
+
+        //ztree的核心配置
+        var setting = {
+            data: {
+                key: {
+                    name: "powerName"
+                },
+                simpleData: {
+                    enable: true,
+                    pIdKey: "pid"
+                }
+            },
+            view: {
+                //隐藏节点图标
+                showIcon: false
+            },
+            check: {
+                enable: true,
+                chkboxType: {"Y": "ps", "N": "s"}
+            }
+        };
+
+        $.post("/power/ajaxPowerListByRid",{"rid":rid},function (data) {
+            //生成树形结构 参数1:选择要生成的地方 参数2:ztree的核心配置 参数3:json数据
+            var zTreeObject = $.fn.zTree.init($("#ztree_div"), setting, data);
+            // 展开所有节点
+            zTreeObject.expandAll(true);
+        }, "json");
+
+    }
+
 </script>
 <!-- 代表一个弹出框 - 默认隐藏 -->
 <div id="dialog_div" style="display: none;">
@@ -121,6 +167,12 @@
         别名:<input name="roleAlias"/><br/>
         <button type="submit">添加</button>
     </form>
+</div>
+
+<!-- 权限选择的弹出框 -->
+<div id="ztree_dialog" style="display: none;">
+    <!-- ztree展示的容器 -->
+    <div id="ztree_div" class="ztree"></div>
 </div>
 
 </body>

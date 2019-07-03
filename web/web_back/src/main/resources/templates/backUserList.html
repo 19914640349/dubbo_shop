@@ -134,7 +134,7 @@
             var checkbox = "";
             for (var i = 0;i < data.length;i++) {
                 if (data[i].checked) {
-                    checkbox += "<input type='checkbox' name='rid' value='" + data[i].id + "' checked/>" + data[i].roleName + "<br/>";
+                    checkbox += "<input type='checkbox' name='rid' value='" + data[i].id + "' checked='checked'/>" + data[i].roleName + "<br/>";
                 }else {
                     checkbox += "<input type='checkbox' name='rid' value='" + data[i].id + "'/>" + data[i].roleName + "<br/>";
                 }
@@ -156,10 +156,10 @@
     </form>
 </div>
 
-<!-- 修改员工的角色信息的弹出框 -->
+<!-- 修改员工的角色的弹出框 -->
 <div id="updateRole_div" style="display: none;">
-    <form action="/backUser/updateRole" method="post">
-        <input type="hidden" id="uid" name="id" />
+    <form action="/backUser/updateUserRoles" method="post">
+        <input type="hidden" id="uid" name="uid" />
         <!-- 展示所有角色 -->
         <div id="roleList_div"></div>
         <button>确认</button>

@@ -50,6 +50,18 @@ public class BackUserController {
     }
 
     /**
+     * 修改员工的角色信息
+     * @param uid
+     * @param rid
+     * @return
+     */
+    @RequestMapping("/updateUserRoles")
+    public String updateUserRoles(Integer uid, Integer[] rid){
+        backUserService.updateUserRoles(uid,rid);
+        return "redirect:/backUser/userList";
+    }
+
+    /**
      * 删除职工
      * @param id
      * @return

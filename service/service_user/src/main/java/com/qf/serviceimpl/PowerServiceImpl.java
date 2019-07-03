@@ -39,4 +39,14 @@ public class PowerServiceImpl implements IPowerService {
     public void addPower(Power power) {
         powerMapper.insert(power);
     }
+
+    /**
+     * 根据角色id查询所有的权限
+     * @param rid
+     * @return
+     */
+    @Override
+    public List<Power> queryPowersByRid(Integer rid) {
+        return powerMapper.queryPowersByRid(rid);
+    }
 }

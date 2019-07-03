@@ -58,4 +58,15 @@ public class PowerController {
         return "redirect:/power/powerList";
     }
 
+    /**
+     * 根据角色的id查询所有权限
+     * @param rid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/ajaxPowerListByRid")
+    public List<Power> ajaxPowerListByRid(Integer rid){
+        return powerService.queryPowersByRid(rid);
+    }
+
 }

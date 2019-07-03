@@ -7,4 +7,9 @@
     <select id="queryAllPower" resultType="com.qf.entity.Power">
         SELECT p1.*,p2.powername AS parentname from power p1 LEFT JOIN power p2 on p1.pid = p2.id
     </select>
+    <select id="queryPowersByRid" resultType="com.qf.entity.Power">
+        select p.*,
+        if((select pid from role_power_table where rid = #{rid} and pid = p.id),'true','false') as checked
+        from power p
+    </select>
 </mapper>

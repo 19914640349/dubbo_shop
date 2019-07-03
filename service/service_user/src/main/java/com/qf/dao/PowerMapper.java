@@ -9,4 +9,5 @@ public interface PowerMapper extends BaseMapper<Power> {
 
     List<Power> queryAllPower();
 
+    List<Power> queryPowersByRid(Integer rid);
 }
