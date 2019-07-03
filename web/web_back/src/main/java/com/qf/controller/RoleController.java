@@ -50,8 +50,8 @@ public class RoleController {
 
     /**
      * 根据用户的id查询所有角色并拥有哪些
-     * @param uid
-     * @return
+     * @param uid   用户id
+     * @return  所有的角色的ajax数据
      */
     @ResponseBody
     @RequestMapping("/ajaxRoleList")
@@ -59,6 +59,12 @@ public class RoleController {
         return roleService.queryRolesByUid(uid);
     }
 
+    /**
+     * 修改角色的权限
+     * @param rid
+     * @param pids
+     * @return
+     */
     @RequestMapping("/updateRolePower")
     public String updateRolePower(Integer rid, Integer[] pids){
         roleService.updateRolePower(rid, pids);

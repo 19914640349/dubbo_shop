@@ -14,4 +14,6 @@ public interface IBackUserService {
     void deleteBackUser(Integer id);
 
     void updateUserRoles(Integer uid, Integer[] rid);
+
+    BackUser login(String username, String password);
 }

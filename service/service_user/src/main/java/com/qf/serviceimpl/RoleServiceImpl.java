@@ -40,7 +40,7 @@ public class RoleServiceImpl implements IRoleService {
 
     /**
      * 添加角色
-     * @param role
+     * @param role  角色对象
      */
     @Override
     public void addRole(Role role) {
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements IRoleService {
 
     /**
      * 根据用户的id查询所有角色并拥有哪些
-     * @param uid
+     * @param uid   用户id
      * @return
      */
     @Override
@@ -59,8 +59,8 @@ public class RoleServiceImpl implements IRoleService {
 
     /**
      * 修改角色的权限
-     * @param rid
-     * @param pids
+     * @param rid   角色id
+     * @param pids  权限id数组
      */
     @Override
     @Transactional

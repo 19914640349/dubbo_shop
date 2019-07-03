@@ -77,4 +77,13 @@ public class BackUserServiceImpl implements IBackUserService {
         }
     }
 
+    @Override
+    public BackUser login(String username, String password) {
+        BackUser backUser = backUserMapper.queryByUsername(username);
+        if (backUser != null && backUser.getPassword().equals(password)) {
+            return backUser;
+        }
+        return null;
+    }
+
 }
