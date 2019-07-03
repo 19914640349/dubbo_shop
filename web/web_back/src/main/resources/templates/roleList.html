@@ -106,6 +106,10 @@
 <!-- End #main-content -->
 
 <script>
+
+    var roleid;
+    var zTreeObject;
+
     //弹出添加职工的dialog
     $(function () {
         $("#open_dialog").click(function () {
@@ -116,19 +120,22 @@
                 modal: true
             });
         })
+        $("#updateRolePower").click(function () {
+            $("#rid").val(roleid);
+            var pids = new Array();
+            debugger
+            var checkedNodes = zTreeObject.getCheckedNodes(true);
+            for(var i = 0; i < checkedNodes.length; i++){
+                pids.push(checkedNodes[i].id);
+            }
+            $("#pids").val(pids);
+            $("#ztree_dialog").dialog("close");
+        });
     })
 
-    // 修改角色的权限
+    // 查看角色的权限
     function updateRolePower(rid) {
-
-        // 开启弹窗
-        $("#ztree_dialog").dialog({
-            title: "选择权限",
-            width: 200,
-            height: 300,
-            modal: true
-        })
-
+        roleid = rid;
         //ztree的核心配置
         var setting = {
             data: {
@@ -144,20 +151,43 @@
                 //隐藏节点图标
                 showIcon: false
             },
+            // 设置复选框
             check: {
                 enable: true,
                 chkboxType: {"Y": "ps", "N": "s"}
             }
         };
 
+        // 通过ajax获取权限并选中
         $.post("/power/ajaxPowerListByRid",{"rid":rid},function (data) {
             //生成树形结构 参数1:选择要生成的地方 参数2:ztree的核心配置 参数3:json数据
-            var zTreeObject = $.fn.zTree.init($("#ztree_div"), setting, data);
+            zTreeObject = $.fn.zTree.init($("#ztree_div"), setting, data);
             // 展开所有节点
             zTreeObject.expandAll(true);
         }, "json");
 
+        // 开启弹窗
+        $("#ztree_dialog").dialog({
+            title: "选择权限",
+            width: 200,
+            height: 300,
+            modal: true
+        });
+
+
     }
+    // 获取修改后的权限信息到form表单
+    /*function updateRolePower() {
+        $("#rid").val(roleid);
+        var pids = new Array();
+        debugger
+        var checkedNodes = zTreeObject.getCheckedNodes(true);
+        for(var i = 0; i < checkedNodes.length; i++){
+            pids.push(checkedNodes[i].id);
+        }
+        $("#pids").val(pids);
+        $("#ztree_dialog").dialog("close");
+    }*/
 
 </script>
 <!-- 代表一个弹出框 - 默认隐藏 -->
@@ -171,8 +201,13 @@
 
 <!-- 权限选择的弹出框 -->
 <div id="ztree_dialog" style="display: none;">
-    <!-- ztree展示的容器 -->
     <div id="ztree_div" class="ztree"></div>
+    <form action="/role/updateRolePower" method="post">
+        <input type="hidden" id="rid" name="rid" />
+        <input type="hidden" id="pids" name="pids" />
+        <!-- ztree展示的容器 -->
+        <button type="submit" id="updateRolePower">修改</button>
+    </form>
 </div>
 
 </body>

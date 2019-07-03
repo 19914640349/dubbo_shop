@@ -59,4 +59,10 @@ public class RoleController {
         return roleService.queryRolesByUid(uid);
     }
 
+    @RequestMapping("/updateRolePower")
+    public String updateRolePower(Integer rid, Integer[] pids){
+        roleService.updateRolePower(rid, pids);
+        return "redirect:/role/roleList";
+    }
+
 }
