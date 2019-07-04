@@ -1,14 +1,10 @@
 package com.qf.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.qf.entity.BackUser;
 import com.qf.service.IBackUserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * FileName: LoginController.java
@@ -40,7 +36,7 @@ public class LoginController {
      * @param password
      * @return
      */
-    @RequestMapping("/login")
+    /*@RequestMapping("/login")
     public String login(String username, String password, Model model){
         BackUser backUser = backUserService.login(username, password);
         if (backUser != null) {
@@ -49,5 +45,5 @@ public class LoginController {
         }
         model.addAttribute("login", "1");
         return "login";
-    }
+    }*/
 }

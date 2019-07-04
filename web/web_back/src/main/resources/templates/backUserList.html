@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <base th:href="${#request.getContextPath() + '/'}"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -58,10 +59,12 @@
                             <!-- Icons -->
                             <a href="#" title="Edit">
                                 <img src="resources/images/icons/pencil.png" alt="Edit"/></a>
-                            <a th:href="|/backUser/deleteBackUser/${user.id}|" title="Delete">&nbsp;
+                            <a th:href="|/backUser/deleteBackUser/${user.id}|"
+                               sec:authorize-url="/backUser/deleteBackUser" title="Delete">&nbsp;
                                 <img src="resources/images/icons/cross.png" alt="Delete"/></a>
                             <!-- 设置员工的角色信息 -->
-                            <a th:onclick="|updateUserRole(${user.id})|" title="Edit Meta">&nbsp;
+                            <a th:onclick="|updateUserRole(${user.id})|"
+                               sec:authorize-url="/role/ajaxRoleList" title="Edit Meta">&nbsp;
                                 <img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta"/></a>
                         </td>
                     </tr>
@@ -73,13 +76,14 @@
                     <tr>
                         <td colspan="6">
                             <div class="bulk-actions align-left">
-                                <select name="dropdown">
+                                <!--<select name="dropdown">
                                     <option value="option1">Choose an action...</option>
                                     <option value="option2">Edit</option>
                                     <option value="option3">Delete</option>
-                                </select> <a class="mybutton" id="open_dialog">添加员工</a>
+                                </select>-->
+                                <a sec:authorize-url="/backUser/addBackUser" class="mybutton" id="open_dialog">添加员工</a>
                             </div>
-                            <div class="pagination">
+                            <!--<div class="pagination">
                                 <a href="#" title="First Page">&laquo; First</a><a href="#"
                                                                                    title="Previous Page">&laquo;
                                 Previous</a> <a href="#"
@@ -91,7 +95,7 @@
                                                                               title="Next Page">Next &raquo;</a><a
                                     href="#"
                                     title="Last Page">Last &raquo;</a>
-                            </div> <!-- End .pagination -->
+                            </div>--> <!-- End .pagination -->
                             <div class="clear"></div>
                         </td>
                     </tr>
@@ -162,7 +166,7 @@
         <input type="hidden" id="uid" name="uid" />
         <!-- 展示所有角色 -->
         <div id="roleList_div"></div>
-        <button>确认</button>
+        <button sec:authorize-url="/backUser/updateUserRoles">确认</button>
     </form>
 </div>
 

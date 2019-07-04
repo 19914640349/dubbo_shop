@@ -1,10 +1,13 @@
 package com.qf.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qf.dao.PowerMapper;
+import com.qf.dao.RolePowerTableMapper;
 import com.qf.entity.Power;
 import com.qf.service.IPowerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +24,9 @@ public class PowerServiceImpl implements IPowerService {
 
     @Autowired
     private PowerMapper powerMapper;
+
+    @Autowired
+    private RolePowerTableMapper rolePowerTableMapper;
 
     /**
      * 查询所有权限
@@ -48,5 +54,18 @@ public class PowerServiceImpl implements IPowerService {
     @Override
     public List<Power> queryPowersByRid(Integer rid) {
         return powerMapper.queryPowersByRid(rid);
+    }
+
+    /**
+     * 删除权限
+     * @param id
+     */
+    @Override
+    @Transactional
+    public void deletePower(Integer id) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("pid",id);
+        // 删除此权限的所有关联角色
+        rolePowerTableMapper.delete(queryWrapper);
     }
 }

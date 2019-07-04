@@ -37,7 +37,7 @@
 		<!-- End #logn-top -->
 		<div id="login-content">
 			<form action="/login" method="post">
-				<div th:if="${login == '1'}" class="notification information png_bg">
+				<div th:if="${#request.getParameter('error') != null && #request.getParameter('error').equals('1')}" class="notification information png_bg">
 					<div>用户名或者密码错误</div>
 				</div>
 				<p>

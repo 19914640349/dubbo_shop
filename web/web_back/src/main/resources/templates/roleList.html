@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <base th:href="${#request.getContextPath() + '/'}"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -55,11 +56,13 @@
                         <td th:text="${role.roleName}"><a href="#" title="title">Sit amet</a></td>
                         <td th:text="${role.roleAlias}">Lorem ipsum dolor</td>
                         <td>
-                            <!-- Icons --> <a href="#" title="Edit"><img
-                                src="resources/images/icons/pencil.png" alt="Edit"/></a> <a
-                                href="#" title="Delete">&nbsp;<img
-                                src="resources/images/icons/cross.png" alt="Delete"/></a> <a
-                                th:onclick="|updateRolePower(${role.id})|" title="Edit Meta">&nbsp;<img
+                            <a href="#" title="Edit"><img
+                                src="resources/images/icons/pencil.png" alt="Edit"/></a>
+                            <a th:href="|/role/deleteRole/${role.id}|"
+                               sec:authorize-url="/role/deleteRole" title="Delete">&nbsp;<img
+                                src="resources/images/icons/cross.png" alt="Delete"/></a>
+                            <a th:onclick="|updateRolePower(${role.id})|"
+                               sec:authorize-url="/power/ajaxPowerListByRid" title="Edit Meta">&nbsp;<img
                                 src="resources/images/icons/hammer_screwdriver.png"
                                 alt="Edit Meta"/></a>
                         </td>
@@ -72,13 +75,14 @@
                     <tr>
                         <td colspan="6">
                             <div class="bulk-actions align-left">
-                                <select name="dropdown">
+                                <!--<select name="dropdown">
                                     <option value="option1">Choose an action...</option>
                                     <option value="option2">Edit</option>
                                     <option value="option3">Delete</option>
-                                </select> <a class="mybutton" id="open_dialog">添加职位</a>
+                                </select>-->
+                                <a sec:authorize-url="/role/addRole" class="mybutton" id="open_dialog">添加角色</a>
                             </div>
-                            <div class="pagination">
+                            <!--<div class="pagination">
                                 <a href="#" title="First Page">&laquo; First</a><a href="#"
                                                                                    title="Previous Page">&laquo;
                                 Previous</a> <a href="#"
@@ -90,7 +94,7 @@
                                                                               title="Next Page">Next &raquo;</a><a
                                     href="#"
                                     title="Last Page">Last &raquo;</a>
-                            </div> <!-- End .pagination -->
+                            </div>--> <!-- End .pagination -->
                             <div class="clear"></div>
                         </td>
                     </tr>
@@ -108,8 +112,8 @@
     var roleid;
     var zTreeObject;
 
-    //弹出添加职工的dialog
     $(function () {
+        //弹出添加职工的dialog
         $("#open_dialog").click(function () {
             $("#dialog_div").dialog({
                 title: "添加职位",
@@ -118,6 +122,8 @@
                 modal: true
             });
         })
+
+        // 修改角色权限
         $("#updateRolePower").click(function () {
             $("#rid").val(roleid);
             var pids = new Array();
@@ -167,28 +173,13 @@
         // 开启弹窗
         $("#ztree_dialog").dialog({
             title: "选择权限",
-            width: 200,
-            height: 300,
             modal: true
         });
 
 
     }
-    // 获取修改后的权限信息到form表单
-    /*function updateRolePower() {
-        $("#rid").val(roleid);
-        var pids = new Array();
-        debugger
-        var checkedNodes = zTreeObject.getCheckedNodes(true);
-        for(var i = 0; i < checkedNodes.length; i++){
-            pids.push(checkedNodes[i].id);
-        }
-        $("#pids").val(pids);
-        $("#ztree_dialog").dialog("close");
-    }*/
-
 </script>
-<!-- 代表一个弹出框 - 默认隐藏 -->
+<!-- 添加角色弹出框 -->
 <div id="dialog_div" style="display: none;">
     <form action="/role/addRole" method="post">
         职位:<input name="roleName"/><br/>
@@ -197,14 +188,14 @@
     </form>
 </div>
 
-<!-- 权限选择的弹出框 -->
+<!-- 修改角色权限的弹出框 -->
 <div id="ztree_dialog" style="display: none;">
     <div id="ztree_div" class="ztree"></div>
     <form action="/role/updateRolePower" method="post">
         <input type="hidden" id="rid" name="rid" />
         <input type="hidden" id="pids" name="pids" />
         <!-- ztree展示的容器 -->
-        <button type="submit" id="updateRolePower">修改</button>
+        <button id="updateRolePower">修改</button>
     </form>
 </div>
 

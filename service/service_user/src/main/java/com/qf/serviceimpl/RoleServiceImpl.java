@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qf.dao.RoleMapper;
 import com.qf.dao.RolePowerTableMapper;
+import com.qf.dao.UserRoleTableMapper;
 import com.qf.entity.Role;
 import com.qf.entity.RolePowerTable;
 import com.qf.service.IRoleService;
@@ -25,6 +26,9 @@ public class RoleServiceImpl implements IRoleService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private UserRoleTableMapper userRoleTableMapper;
 
     @Autowired
     private RolePowerTableMapper rolePowerTableMapper;
@@ -74,5 +78,23 @@ public class RoleServiceImpl implements IRoleService {
             RolePowerTable rolePowerTable = new RolePowerTable(rid,pid);
             rolePowerTableMapper.insert(rolePowerTable);
         }
+    }
+
+    /**
+     * 删除角色
+     * @param id
+     */
+    @Override
+    @Transactional
+    public void deleteRole(Integer id) {
+
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("rid",id);
+        // 删除此角色的所有关联用户
+        userRoleTableMapper.delete(queryWrapper);
+        // 删除此角色的所有关联权限
+        rolePowerTableMapper.delete(queryWrapper);
+
+        roleMapper.deleteById(id);
     }
 }

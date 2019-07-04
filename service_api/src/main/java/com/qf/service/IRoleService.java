@@ -13,4 +13,6 @@ public interface IRoleService {
     List<Role> queryRolesByUid(Integer uid);
 
     void updateRolePower(Integer rid, Integer[] pids);
+
+    void deleteRole(Integer id);
 }

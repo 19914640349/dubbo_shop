@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <base th:href="${#request.getContextPath() + '/'}"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -57,11 +58,12 @@
                         <td th:text="${power.powerPath}">Lorem ipsum dolor</td>
                         <td th:text="${power.parentName}">Consectetur time</td>
                         <td>
-                            <!-- Icons --> <a href="#" title="Edit"><img
-                                src="resources/images/icons/pencil.png" alt="Edit"/></a> <a
-                                href="#" title="Delete">&nbsp;<img
-                                src="resources/images/icons/cross.png" alt="Delete"/></a> <a
-                                href="#" title="Edit Meta">&nbsp;<img
+                            <a href="#" title="Edit"><img
+                                src="resources/images/icons/pencil.png" alt="Edit"/></a>
+                            <a th:href="|/power/deletePower/${power.id}|"
+                               sec:authorize-url="/power/deletePower" title="Delete">&nbsp;<img
+                                src="resources/images/icons/cross.png" alt="Delete"/></a>
+                            <a href="#" title="Edit Meta">&nbsp;<img
                                 src="resources/images/icons/hammer_screwdriver.png"
                                 alt="Edit Meta"/></a>
                         </td>
@@ -74,13 +76,14 @@
                     <tr>
                         <td colspan="6">
                             <div class="bulk-actions align-left">
-                                <select name="dropdown">
+                                <!--<select name="dropdown">
                                     <option value="option1">Choose an action...</option>
                                     <option value="option2">Edit</option>
                                     <option value="option3">Delete</option>
-                                </select> <a class="mybutton" id="open_dialog">添加权限</a>
+                                </select> -->
+                                <a sec:authorize-url="/power/addPower" class="mybutton" id="open_dialog">添加权限</a>
                             </div>
-                            <div class="pagination">
+                            <!--<div class="pagination">
                                 <a href="#" title="First Page">&laquo; First</a><a href="#"
                                                                                    title="Previous Page">&laquo;
                                 Previous</a> <a href="#"
@@ -92,7 +95,7 @@
                                                                               title="Next Page">Next &raquo;</a><a
                                     href="#"
                                     title="Last Page">Last &raquo;</a>
-                            </div> <!-- End .pagination -->
+                            </div>--> <!-- End .pagination -->
                             <div class="clear"></div>
                         </td>
                     </tr>
@@ -146,7 +149,7 @@
                 callback:{
                     onClick:function (event, treeId, treeNode) {
                         //判断是否为按钮级权限，如果点击的是按钮级权限，则提示该权限不能为父权限
-                        if (treeNode.status == 3){
+                        if (treeNode.status == 4){
                             alert("该权限不能作为父权限");
                             return
                         }
@@ -154,6 +157,8 @@
                             $("#status").val(2);
                         }else if (treeNode.status == 2) {
                             $("#status").val(3);
+                        }else if (treeNode.status == 3) {
+                            $("#status").val(4);
                         }
 
                         $("#btn").html(treeNode.powerName);
@@ -178,7 +183,7 @@
 
     })
 </script>
-<!--添加权限弹出框 - 默认隐藏 -->
+<!--添加权限弹出框 -->
 <div id="dialog_div" style="display: none;">
     <form action="/power/addPower" method="post">
         权限名:<input name="powerName"/><br/>

@@ -11,4 +11,6 @@ public interface IPowerService {
     void addPower(Power power);
 
     List<Power> queryPowersByRid(Integer rid);
+
+    void deletePower(Integer id);
 }

@@ -5,6 +5,7 @@ import com.qf.entity.Role;
 import com.qf.service.IRoleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,6 +46,17 @@ public class RoleController {
     @RequestMapping("/addRole")
     public String addRole(Role role){
         roleService.addRole(role);
+        return "redirect:/role/roleList";
+    }
+
+    /**
+     * 删除角色
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deleteRole/{id}")
+    public String deleteRole(@PathVariable Integer id){
+        roleService.deleteRole(id);
         return "redirect:/role/roleList";
     }
 

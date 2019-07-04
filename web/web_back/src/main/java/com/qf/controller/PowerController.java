@@ -5,6 +5,7 @@ import com.qf.entity.Power;
 import com.qf.service.IPowerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -67,6 +68,17 @@ public class PowerController {
     @RequestMapping("/ajaxPowerListByRid")
     public List<Power> ajaxPowerListByRid(Integer rid){
         return powerService.queryPowersByRid(rid);
+    }
+
+    /**
+     * 删除权限
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deletePower/{id}")
+    public String deletePower(@PathVariable Integer id){
+        powerService.deletePower(id);
+        return "redirect:/power/powerList";
     }
 
 }

@@ -8,6 +8,8 @@ import com.qf.entity.BackUser;
 import com.qf.entity.UserRoleTable;
 import com.qf.service.IBackUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -53,7 +55,15 @@ public class BackUserServiceImpl implements IBackUserService {
      * @param id
      */
     @Override
+    @Transactional
     public void deleteBackUser(Integer id) {
+
+        //根据用户id删除用户和角色的所有关系
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("uid",id);
+        userRoleTableMapper.delete(queryWrapper);
+
+        //删除用户
         backUserMapper.deleteById(id);
     }
 
@@ -77,13 +87,28 @@ public class BackUserServiceImpl implements IBackUserService {
         }
     }
 
+    /**
+     * security实现登录
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        BackUser backUser = backUserMapper.queryByUsername(username);
+        if (backUser == null) {
+            throw new UsernameNotFoundException("该用户不存在！");
+        }
+        return backUser;
+    }
+
+    /*@Override
     public BackUser login(String username, String password) {
         BackUser backUser = backUserMapper.queryByUsername(username);
         if (backUser != null && backUser.getPassword().equals(password)) {
             return backUser;
         }
         return null;
-    }
+    }*/
 
 }
