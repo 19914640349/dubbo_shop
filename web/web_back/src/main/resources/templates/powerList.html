@@ -154,10 +154,13 @@
                             return
                         }
                         if (treeNode.status == 1) {
+                            $("#menu").html("子菜单权限");
                             $("#status").val(2);
                         }else if (treeNode.status == 2) {
+                            $("#menu").html("按钮级权限");
                             $("#status").val(3);
                         }else if (treeNode.status == 3) {
+                            $("#menu").html("子按钮权限");
                             $("#status").val(4);
                         }
 
@@ -186,10 +189,11 @@
 <!--添加权限弹出框 -->
 <div id="dialog_div" style="display: none;">
     <form action="/power/addPower" method="post">
-        权限名:<input name="powerName"/><br/>
+        权限名：<input name="powerName"/><br/>
         父权限：<button id="btn" type="button">无</button><br/>
         <input type="hidden" id="pid" name="pid" value="-1"/>
-        路径:<input name="powerPath"/><br/>
+        路径：<input name="powerPath"/><br/>
+        权限状态：<span id="menu">主菜单权限</span><br/>
         <input type="hidden" id="status" name="status" value="1"/>
         <button type="submit">添加</button>
     </form>
