@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <base th:href="${#request.getContextPath() + '/'}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <!-- Invalid Stylesheet. This makes stuff look pretty. Remove it if you want the CSS completely valid -->
+    <!-- Reset Stylesheet -->
+    <link rel="stylesheet" href="resources/css/reset.css" type="text/css"
+          media="screen"/>
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="resources/css/style.css" type="text/css"
+          media="screen"/>
+    <link rel="stylesheet" href="resources/css/invalid.css" type="text/css"
+          media="screen"/>
+
+    <!--                       Javascripts                       -->
+    <!-- jQuery -->
+    <script type="text/javascript"
+            src="resources/scripts/jquery-1.8.3.min.js"></script>
+    <!-- jQuery Configuration -->
+    <!--<script type="text/javascript"
+            src="resources/scripts/simpla.jquery.configuration.js"></script>-->
+
+    <!-- 添加弹出框的jquery插件 -->
+    <script type="text/javascript" src="resources/widget/dialog/jquery-ui-1.9.2.custom.min.js"></script>
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+
+    <!-- 添加树形结构插件 ztree -->
+    <script type="text/javascript" src="resources/widget/zTree/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="resources/widget/zTree/zTreeStyle/zTreeStyle.css">
+
+</head>
+<body>
+<div id="main-content">
+    <div class="content-box">
+        <!-- End .content-box-header -->
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <table>
+                    <thead>
+                    <tr>
+                        <th><input class="check-all" type="checkbox"/></th>
+                        <th>编号</th>
+                        <th>商品图片</th>
+                        <th>商品名称</th>
+                        <th>商品描述</th>
+                        <th>商品价格</th>
+                        <th>商品库存</th>
+                        <th>商品类别</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="goods : ${goodsList}">
+                        <td><input type="checkbox"/></td>
+                        <td th:text="${goods.id}">Lorem ipsum dolor</td>
+                        <td th:text="${goods.gimage}"><a href="#" title="title">Sit amet</a></td>
+                        <td th:text="${goods.gname}">Consectetur adipiscing</td>
+                        <td th:text="${goods.ginfo}">Donec tortor diam</td>
+                        <td th:text="${#numbers.formatCurrency(goods.gprice)}">Consectetur time</td>
+                        <td th:text="${goods.gsave}">Consectetur time</td>
+                        <td th:text="${goods.goodsType.tname}">Consectetur time</td>
+                        <td>
+                            <!-- Icons -->
+                            <!--<a href="#" title="Edit">
+                                <img src="resources/images/icons/pencil.png" alt="Edit"/></a>
+                            <a th:href="|/backUser/deleteBackUser/${user.id}|"
+                               sec:authorize-url="/backUser/deleteBackUser" title="Delete">&nbsp;
+                                <img src="resources/images/icons/cross.png" alt="Delete"/></a>
+                            &lt;!&ndash; 设置员工的角色信息 &ndash;&gt;
+                            <a th:onclick="|updateUserRole(${user.id})|"
+                               sec:authorize-url="/role/ajaxRoleList" title="Edit Meta">&nbsp;
+                                <img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta"/></a>-->
+                        </td>
+                    </tr>
+
+
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <div class="bulk-actions align-left">
+                                <!--<select name="dropdown">
+                                    <option value="option1">Choose an action...</option>
+                                    <option value="option2">Edit</option>
+                                    <option value="option3">Delete</option>
+                                </select>-->
+                                <a sec:authorize-url="/goods/addGoods" class="mybutton" id="open_dialog">添加商品</a>
+                            </div>
+                            <!--<div class="pagination">
+                                <a href="#" title="First Page">&laquo; First</a><a href="#"
+                                                                                   title="Previous Page">&laquo;
+                                Previous</a> <a href="#"
+                                                class="number" title="1">1</a> <a href="#" class="number"
+                                                                                  title="2">2</a> <a href="#"
+                                                                                                     class="number current"
+                                                                                                     title="3">3</a>
+                                <a href="#" class="number" title="4">4</a> <a href="#"
+                                                                              title="Next Page">Next &raquo;</a><a
+                                    href="#"
+                                    title="Last Page">Last &raquo;</a>
+                            </div>--> <!-- End .pagination -->
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!-- End .content-box-content -->
+    </div>
+</div>
+<!-- End #main-content -->
+
+<script>
+    $(function () {
+        //弹出添加商品的dialog
+        $("#open_dialog").click(function () {
+            $("#dialog_div").dialog({
+                title: "添加商品",
+                width: 400,
+                height: 300,
+                modal: true
+            });
+        });
+
+        // 弹出选择商品类别
+        $("#btn").click(function () {
+            var setting = {
+                data:{
+                    key:{
+                        name:"tname"
+                    },
+                    simpleData:{
+                        enable:true,
+                        pIdKey:"pid"
+                    }
+                },
+                view:{
+                    //隐藏节点图标
+                    showIcon:false
+                },
+                callback:{
+                    onClick:function (event, treeId, treeNode) {
+                        if (treeNode.status == 1){
+                            alert("该类别不能作为商品类别");
+                            return;
+                        }
+
+                        $("#btn").html(treeNode.tname);
+                        $("#tid").val(treeNode.id);
+
+                        // 关闭弹窗
+                        $("#ztree_dialog").dialog("close");
+
+                    }
+                }
+            };
+            // 通过ajax查询数据库
+            $.post("/goodsType/ajaxGoodsTypeList",function (data) {
+                //生成树形结构 参数1:选择要生成的地方 参数2:ztree的核心配置 参数3:json数据
+                var zTreeObject = $.fn.zTree.init($("#ztree_div"), setting, data);
+                // 展开所有节点
+                zTreeObject.expandAll(true);
+            },"json");
+
+            // 弹出商品类别选择框
+            $("#ztree_dialog").dialog({
+                title: "添加类别",
+                modal: true
+            });
+
+        });
+
+    })
+
+</script>
+<!-- 添加商品的弹出框 -->
+<div id="dialog_div" style="display: none;">
+    <form action="/goods/addGoods" method="post">
+        商品名称:<input name="gname"/><br/>
+        商品图片:<input name="gimage"/><br/>
+        商品类别:<button type="button" id="btn">无</button><br/>
+        <input type="hidden" id="tid" name="tid" />
+        商品描述:<textarea name="ginfo" rows="5px" cols="8px"></textarea><br/>
+        商品价格：<input name="gprice"/><br/>
+        商品库存:<input name="gsave"/><br/>
+        <button type="submit">添加</button>
+    </form>
+</div>
+
+<!-- 商品所属类别选择的弹出框 -->
+<div id="ztree_dialog" style="display: none;">
+    <!-- ztree展示的容器 -->
+    <div id="ztree_div" class="ztree"></div>
+</div>
+
+</body>
+</html>

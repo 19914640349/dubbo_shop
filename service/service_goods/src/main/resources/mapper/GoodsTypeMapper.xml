@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.GoodsTypeMapper">
+
+    <select id="queryAllGoodsType" resultType="com.qf.entity.GoodsType">
+        SELECT g1.*,g2.tname AS pname FROM goodstype g1 LEFT JOIN goodstype g2 ON g1.pid = g2.id
+    </select>
+
+</mapper>
