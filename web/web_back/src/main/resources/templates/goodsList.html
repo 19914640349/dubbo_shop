@@ -31,6 +31,10 @@
     <script type="text/javascript" src="resources/widget/zTree/jquery.ztree.all.min.js"></script>
     <link rel="stylesheet" href="resources/widget/zTree/zTreeStyle/zTreeStyle.css">
 
+    <!-- 添加一个图片上传插件 -->
+    <script type="text/javascript" src="resources/widget/webuploader/webuploader.min.js"></script>
+    <link rel="stylesheet" href="resources/widget/webuploader/webuploader.css">
+
 </head>
 <body>
 <div id="main-content">
@@ -57,7 +61,9 @@
                     <tr th:each="goods : ${goodsList}">
                         <td><input type="checkbox"/></td>
                         <td th:text="${goods.id}">Lorem ipsum dolor</td>
-                        <td th:text="${goods.gimage}"><a href="#" title="title">Sit amet</a></td>
+                        <td><img th:each="img : ${#strings.listSplit(goods.gimage, '|')}"
+                                 th:src="|/goods/getImg?imgPath=${img}|"
+                                 style="width: 80px; height: 60px; margin-right: 3px"/></td>
                         <td th:text="${goods.gname}">Consectetur adipiscing</td>
                         <td th:text="${goods.ginfo}">Donec tortor diam</td>
                         <td th:text="${#numbers.formatCurrency(goods.gprice)}">Consectetur time</td>
@@ -89,7 +95,8 @@
                                     <option value="option2">Edit</option>
                                     <option value="option3">Delete</option>
                                 </select>-->
-                                <a sec:authorize-url="/goods/addGoods" class="mybutton" id="open_dialog">添加商品</a>
+                                <a sec:authorize-url="/goods/addGoods" class="mybutton"
+                                   href="/goods/toAddGoods">添加商品</a>
                             </div>
                             <!--<div class="pagination">
                                 <a href="#" title="First Page">&laquo; First</a><a href="#"
@@ -122,8 +129,8 @@
         $("#open_dialog").click(function () {
             $("#dialog_div").dialog({
                 title: "添加商品",
-                width: 400,
-                height: 300,
+                width: 600,
+                height: 500,
                 modal: true
             });
         });
@@ -176,14 +183,61 @@
 
         });
 
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+            // 选完文件后，是否自动上传。
+            auto: true,
+            // swf文件路径
+            swf: 'resources/widget/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: '/goods/uploadImg',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            uploader.makeThumb( file, function(error, src ) {
+                if ( error ) {
+                    alert("该文件不能生成缩略图！");
+                    return;
+                }
+
+                var img = "<img src='" + src + "' style='width: 100px; height: 100px; margin: 5px'/>";
+                $("#showImg").append(img);
+            }, 100, 100);
+        });
+
+        //设置文件上传成功的事件
+        uploader.on('uploadSuccess', function(file, response){
+            var images = $("#gimage").val();
+            if(images != ""){
+                images += "|";
+            }
+            images += response.filePath;
+            $("#gimage").val(images);
+        });
     })
 
 </script>
 <!-- 添加商品的弹出框 -->
 <div id="dialog_div" style="display: none;">
-    <form action="/goods/addGoods" method="post">
+    <form action="/goods/addGoods" method="post" enctype="multipart/form-data">
         商品名称:<input name="gname"/><br/>
-        商品图片:<input name="gimage"/><br/>
+        商品图片:
+            <div id="filePicker">选择图片</div>
+            <div id="showImg" style="width: 330px; height: 110px; border: #00b7ee solid 1px"></div>
+            <input id="gimage" name="gimage" type="hidden" value=""/><br/>
         商品类别:<button type="button" id="btn">无</button><br/>
         <input type="hidden" id="tid" name="tid" />
         商品描述:<textarea name="ginfo" rows="5px" cols="8px"></textarea><br/>

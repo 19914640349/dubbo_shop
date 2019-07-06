@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <base th:href="${#request.getContextPath() + '/'}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript" src="resources/scripts/jquery-1.8.3.min.js"></script>
+
+    <!-- 添加弹出框的jquery插件 -->
+    <script type="text/javascript" src="resources/widget/dialog/jquery-ui-1.9.2.custom.min.js"></script>
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+
+    <!-- 添加树形结构插件 ztree -->
+    <script type="text/javascript" src="resources/widget/zTree/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="resources/widget/zTree/zTreeStyle/zTreeStyle.css">
+
+    <!-- 添加一个图片上传插件 -->
+    <script type="text/javascript" src="resources/widget/webuploader/webuploader.min.js"></script>
+    <link rel="stylesheet" href="resources/widget/webuploader/webuploader.css">
+
+</head>
+<body>
+    <form action="/goods/addGoods" method="post" enctype="multipart/form-data">
+        商品名称:<input name="gname"/><br/>
+        商品图片:
+        <div id="filePicker">选择图片</div>
+        <div id="showImg" style="width: 330px; height: 110px; border: #00b7ee solid 1px"></div>
+        <input id="gimage" name="gimage" type="hidden" value=""/><br/>
+        商品类别:<button type="button" id="btn">无</button><br/>
+        <input type="hidden" id="tid" name="tid" />
+        商品描述:<br/><textarea name="ginfo" rows="10px" cols="40px"></textarea><br/>
+        商品价格：<input name="gprice"/><br/>
+        商品库存:<input name="gsave"/><br/>
+        <button type="submit">添加</button>
+    </form>
+
+    <!-- 商品所属类别选择的弹出框 -->
+    <div id="ztree_dialog" style="display: none;">
+        <!-- ztree展示的容器 -->
+        <div id="ztree_div" class="ztree"></div>
+    </div>
+
+    <script>
+        $(function () {
+            // 弹出选择商品类别
+            $("#btn").click(function () {
+                var setting = {
+                    data:{
+                        key:{
+                            name:"tname"
+                        },
+                        simpleData:{
+                            enable:true,
+                            pIdKey:"pid"
+                        }
+                    },
+                    view:{
+                        //隐藏节点图标
+                        showIcon:false
+                    },
+                    callback:{
+                        onClick:function (event, treeId, treeNode) {
+                            if (treeNode.status == 1){
+                                alert("该类别不能作为商品类别");
+                                return;
+                            }
+
+                            $("#btn").html(treeNode.tname);
+                            $("#tid").val(treeNode.id);
+
+                            // 关闭弹窗
+                            $("#ztree_dialog").dialog("close");
+
+                        }
+                    }
+                };
+                // 通过ajax查询数据库
+                $.post("/goodsType/ajaxGoodsTypeList",function (data) {
+                    //生成树形结构 参数1:选择要生成的地方 参数2:ztree的核心配置 参数3:json数据
+                    var zTreeObject = $.fn.zTree.init($("#ztree_div"), setting, data);
+                    // 展开所有节点
+                    zTreeObject.expandAll(true);
+                },"json");
+
+                // 弹出商品类别选择框
+                $("#ztree_dialog").dialog({
+                    title: "添加类别",
+                    modal: true
+                });
+
+            });
+
+            // 初始化Web Uploader
+            var uploader = WebUploader.create({
+                // 选完文件后，是否自动上传。
+                auto: true,
+                // swf文件路径
+                swf: 'resources/widget/webuploader/Uploader.swf',
+                // 文件接收服务端。
+                server: '/goods/uploadImg',
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#filePicker',
+                // 只允许选择图片文件。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+
+            // 当有文件添加进来的时候
+            uploader.on( 'fileQueued', function( file ) {
+
+                // 创建缩略图
+                // 如果为非图片文件，可以不用调用此方法。
+                uploader.makeThumb( file, function(error, src ) {
+                    if ( error ) {
+                        alert("该文件不能生成缩略图！");
+                        return;
+                    }
+
+                    var img = "<img src='" + src + "' style='width: 100px; height: 100px; margin: 5px'/>";
+                    $("#showImg").append(img);
+                }, 100, 100);
+            });
+
+            //设置文件上传成功的事件
+            uploader.on('uploadSuccess', function(file, response){
+                var images = $("#gimage").val();
+                if(images != ""){
+                    images += "|";
+                }
+                images += response.filePath;
+                $("#gimage").val(images);
+            });
+        })
+    </script>
+</body>
+</html>

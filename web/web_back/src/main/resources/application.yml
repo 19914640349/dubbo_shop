@@ -3,6 +3,11 @@ server:
 spring:
   thymeleaf:
     cache: false
+  servlet:
+    multipart:
+      #限制文件上传的大小
+      max-file-size: 20MB
+      max-request-size: 20MB
 dubbo:
   application:
     name: web_back
@@ -12,3 +17,7 @@ dubbo:
     check: false
     timeout: 10000
     retries: 3
+
+#自定义一个文件上传路径
+upload:
+  path: C:/Users/Administrator/Desktop/sz_java_1903/image/
