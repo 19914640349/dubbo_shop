@@ -9,4 +9,6 @@ public interface IGoodsService {
     List<Goods> queryAllGoods();
 
     void addGoods(Goods goods);
+
+    Goods queryGoodsById(Integer id);
 }

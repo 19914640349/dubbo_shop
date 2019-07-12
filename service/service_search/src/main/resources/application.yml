@@ -1,0 +1,12 @@
+dubbo:
+  application:
+    name: service_search
+  registry:
+    address: zookeeper://192.168.245.199:2181
+  protocol:
+    port: -1
+    name: dubbo
+spring:
+  data:
+    solr:
+      host: http://192.168.245.199:8983/solr/mycollection

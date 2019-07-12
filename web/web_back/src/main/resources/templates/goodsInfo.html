@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <base th:href="${#request.getContextPath() + '/'}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="resources/scripts/jquery-1.8.3.min.js"></script>
+    <script>
+        $(function () {
+            var ginfo = $("#ginfo").text();
+            $("#ginfo").html(ginfo);
+        })
+    </script>
+</head>
+<body>
+    <div id="ginfo" th:text="${goods.ginfo}"></div>
+</body>
+</html>

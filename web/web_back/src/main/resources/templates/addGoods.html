@@ -20,6 +20,11 @@
     <script type="text/javascript" src="resources/widget/webuploader/webuploader.min.js"></script>
     <link rel="stylesheet" href="resources/widget/webuploader/webuploader.css">
 
+    <!-- 引入kindeditor富文本编辑器 -->
+    <link rel="stylesheet" href="resources/widget/kindeditor/themes/default/default.css" />
+    <script charset="utf-8" src="resources/widget/kindeditor/kindeditor-all-min.js"></script>
+    <script charset="utf-8" src="resources/widget/kindeditor/lang/zh_CN.js"></script>
+
 </head>
 <body>
     <form action="/goods/addGoods" method="post" enctype="multipart/form-data">
@@ -30,7 +35,8 @@
         <input id="gimage" name="gimage" type="hidden" value=""/><br/>
         商品类别:<button type="button" id="btn">无</button><br/>
         <input type="hidden" id="tid" name="tid" />
-        商品描述:<br/><textarea name="ginfo" rows="10px" cols="40px"></textarea><br/>
+        商品描述:<br/>
+        <textarea id="editor_id" name="ginfo" style="width:700px;height:300px;"></textarea><br/>
         商品价格：<input name="gprice"/><br/>
         商品库存:<input name="gsave"/><br/>
         <button type="submit">添加</button>
@@ -136,7 +142,19 @@
                 images += response.filePath;
                 $("#gimage").val(images);
             });
+
+
+            // 富文本编辑
+            KindEditor.ready(function(K) {
+                K.create('#editor_id',{
+                    filePostName: 'file',
+                    uploadJson : '/goods/uploadText',
+                    allowImageUpload: true
+                });
+            });
+
         })
+
     </script>
 </body>
 </html>

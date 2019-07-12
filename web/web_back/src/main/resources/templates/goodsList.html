@@ -62,10 +62,10 @@
                         <td><input type="checkbox"/></td>
                         <td th:text="${goods.id}">Lorem ipsum dolor</td>
                         <td><img th:each="img : ${#strings.listSplit(goods.gimage, '|')}"
-                                 th:src="|/goods/getImg?imgPath=${img}|"
+                                 th:src="|http://192.168.245.199/${img}|"
                                  style="width: 80px; height: 60px; margin-right: 3px"/></td>
                         <td th:text="${goods.gname}">Consectetur adipiscing</td>
-                        <td th:text="${goods.ginfo}">Donec tortor diam</td>
+                        <td><a th:href="|/goods/toGoodsInfo?id=${goods.id}|">查看商品描述</a></td>
                         <td th:text="${#numbers.formatCurrency(goods.gprice)}">Consectetur time</td>
                         <td th:text="${goods.gsave}">Consectetur time</td>
                         <td th:text="${goods.goodsType.tname}">Consectetur time</td>

@@ -13,12 +13,13 @@
         <result column="gsave" property="gsave"/>
         <result column="tid" property="tid"/>
 
-        <collection property="goodsType" ofType="com.qf.entity.GoodsType">
+        <!-- 对一 -->
+        <association property="goodsType" javaType="com.qf.entity.GoodsType">
             <id column="typeid" property="id"/>
             <result column="tname" property="tname"/>
             <result column="pid" property="pid"/>
             <result column="typestatus" property="status"/>
-        </collection>
+        </association>
     </resultMap>
 
     <select id="queryAllGoods" resultMap="goodsResultMap">

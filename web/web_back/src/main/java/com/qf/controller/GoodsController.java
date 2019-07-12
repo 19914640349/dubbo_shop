@@ -1,9 +1,12 @@
 package com.qf.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.github.tobato.fastdfs.domain.StorePath;
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.qf.entity.Goods;
 import com.qf.service.IGoodsService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * FileName: GoodsController.java
@@ -33,6 +35,9 @@ public class GoodsController {
 
     @Reference
     private IGoodsService goodsService;
+
+    @Autowired
+    private FastFileStorageClient fastFileStorageClient;
 
     /**
      * 查询所有所有商品信息
@@ -75,27 +80,7 @@ public class GoodsController {
     @ResponseBody
     public String uploadImg(MultipartFile file){
 
-        //截取源图片的后缀
-        String originalFilename = file.getOriginalFilename();
-        int index = originalFilename.lastIndexOf(".");
-        String suffix = originalFilename.substring(index);
-
-        //生成文件名称
-        String fileName = UUID.randomUUID().toString() + suffix;
-        //设置上传的文件路径
-        String uploadFile = uploadPath + fileName;
-        try(
-                //输入流
-                InputStream inputStream = file.getInputStream();
-                //输出流
-                OutputStream outputStream = new FileOutputStream(uploadFile)
-        ) {
-
-            IOUtils.copy(inputStream, outputStream);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String uploadFile = upload(file);
         return "{\"filePath\":\"" + uploadFile + "\"}";
     }
 
@@ -119,4 +104,52 @@ public class GoodsController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 上传富文本框的图片
+     * @param file
+     * @return
+     */
+    @RequestMapping("/uploadText")
+    @ResponseBody
+    public String uploadText(MultipartFile file){
+
+        String uploadFile = upload(file);
+        return "{\"error\" : 0, \"url\" : \"http://192.168.245.199/"+uploadFile+"\"}";
+    }
+
+    /**
+     * 查看商品描述
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/toGoodsInfo")
+    public String toGoodsInfo(Integer id, Model model){
+        Goods goods = goodsService.queryGoodsById(id);
+        model.addAttribute("goods", goods);
+        return "goodsInfo";
+    }
+
+    /**
+     * 上传文件
+     * @param file
+     * @return
+     */
+    public String upload(MultipartFile file){
+        //截取源图片的后缀
+        String originalFilename = file.getOriginalFilename();
+        int index = originalFilename.lastIndexOf(".");
+        String suffix = originalFilename.substring(index + 1);
+
+        String uploadFile = "";
+        try {
+            StorePath storePath =fastFileStorageClient.uploadImageAndCrtThumbImage(file.getInputStream(),file.getSize(),suffix,null);
+            uploadFile = storePath.getFullPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return uploadFile;
+    }
+
 }
