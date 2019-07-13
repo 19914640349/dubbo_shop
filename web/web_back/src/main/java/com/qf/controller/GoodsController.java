@@ -115,7 +115,7 @@ public class GoodsController {
     public String uploadText(MultipartFile file){
 
         String uploadFile = upload(file);
-        return "{\"error\" : 0, \"url\" : \"http://192.168.245.199/"+uploadFile+"\"}";
+        return "{\"error\" : 0, \"url\" : \"http://192.168.245.199:8080/"+uploadFile+"\"}";
     }
 
     /**

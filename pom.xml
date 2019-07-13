@@ -8,6 +8,7 @@
         <module>service</module>
         <module>web</module>
         <module>service_api</module>
+        <module>common</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

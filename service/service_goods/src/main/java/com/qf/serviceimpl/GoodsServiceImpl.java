@@ -6,6 +6,7 @@ import com.qf.dao.GoodsMapper;
 import com.qf.entity.Goods;
 import com.qf.service.IGoodsService;
 import com.qf.service.ISearchService;
+import com.qf.utils.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -46,10 +47,12 @@ public class GoodsServiceImpl implements IGoodsService {
         goodsMapper.insert(goods);
         // 添加到索引库
         searchService.addGoods(goods);
+        //发送请求到详情工程生成静态页面
+        HttpUtil.sendGet("http://localhost:8083/item/createItem?id=" + goods.getId());
     }
 
     /**
-     * 根绝id查询商品
+     * 根据id查询商品
      * @param id
      * @return
      */
