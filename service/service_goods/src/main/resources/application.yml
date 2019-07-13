@@ -4,6 +4,9 @@ spring:
     username: root
     password: root
     url: jdbc:mysql://localhost:3306/shop
+  rabbitmq:
+    host: 192.168.245.199
+    virtual-host: /
 dubbo:
   application:
     name: service_goods

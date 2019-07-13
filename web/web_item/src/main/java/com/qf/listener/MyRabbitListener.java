@@ -1,43 +1,37 @@
-package com.qf.controller;
+package com.qf.listener;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.qf.service.IGoodsService;
+import com.qf.controller.ItemController;
+import com.qf.entity.Goods;
 import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * FileName: ItemController.java
+ * FileName: MyRabbitListener.java
  * Desc:
  *
  * @author gf
  * @version V1.0
- * @Date 2019/7/13 9:13
+ * @Date 2019/7/13 18:00
  */
-@Controller
-@RequestMapping("/item")
-public class ItemController {
-
-    @Reference
-    private IGoodsService goodsService;
+@Component
+public class MyRabbitListener {
 
     @Autowired
     private Configuration configuration;
 
-    /**
-     * 生成商品静态页面
-     * @param id
-     */
-    @RequestMapping("/createItem")
-    @ResponseBody
-    public void createItem(Integer id, HttpServletRequest request){
-
-        /*// 根据id获得商品信息
-        Goods goods = goodsService.queryGoodsById(id);
+    @RabbitListener(queues = "item_queue")
+    public void itemQueue(Goods goods){
 
         // 根据goodsItem.ftl生成商品静态页面
         try {
@@ -46,7 +40,7 @@ public class ItemController {
             Map<String, Object> map = new HashMap<>();
             map.put("goods", goods);
             map.put("images", goods.getGimage().split("\\|"));
-            map.put("contextPath", request.getContextPath());
+            map.put("contextPath", "");
 
             // 获取生成模板的路径
             String path = ItemController.class.getResource("/static").getPath().replace("%20"," ");
@@ -57,7 +51,7 @@ public class ItemController {
             }
             try (
                     // 文件路径
-                    Writer writer = new FileWriter(file.getAbsolutePath() + "/" + id + ".html")
+                    Writer writer = new FileWriter(file.getAbsolutePath() + "/" + goods.getId() + ".html")
             ) {
                 // 生成页面
                 template.process(map, writer);
@@ -65,7 +59,7 @@ public class ItemController {
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
         }
-*/
+
     }
 
 }

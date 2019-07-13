@@ -10,3 +10,6 @@ spring:
   data:
     solr:
       host: http://192.168.245.199:8983/solr/mycollection
+  rabbitmq:
+    host: 192.168.245.199
+    virtual-host: /
