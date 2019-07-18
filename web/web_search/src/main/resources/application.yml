@@ -8,9 +8,6 @@ dubbo:
     name: web_search
   registry:
     address: zookeeper://192.168.245.199:2181
-  protocol:
-    port: -1
-    name: dubbo
   consumer:
     check: false
     timeout: 10000

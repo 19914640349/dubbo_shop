@@ -6,6 +6,9 @@ dubbo:
   protocol:
     port: -1
     name: dubbo
+  consumer:
+    check: false
+    timeout: 10000
 spring:
   data:
     solr:

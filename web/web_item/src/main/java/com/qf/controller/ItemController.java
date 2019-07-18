@@ -36,8 +36,8 @@ public class ItemController {
     @ResponseBody
     public void createItem(Integer id, HttpServletRequest request){
 
-        /*// 根据id获得商品信息
-        Goods goods = goodsService.queryGoodsById(id);
+        // 根据id获得商品信息
+        /*Goods goods = goodsService.queryGoodsById(id);
 
         // 根据goodsItem.ftl生成商品静态页面
         try {
@@ -64,8 +64,7 @@ public class ItemController {
             }
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
-        }
-*/
+        }*/
     }
 
 }

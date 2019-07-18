@@ -52,6 +52,8 @@ public class GoodsServiceImpl implements IGoodsService {
         //searchService.addGoods(goods);
         //发送请求到详情工程生成静态页面
         //HttpUtil.sendGet("http://localhost:8083/item/createItem?id=" + goods.getId());
+
+        // 把消息发送到交换机广播出去
         rabbitTemplate.convertAndSend("goods_exchange", "", goods);
     }
 
