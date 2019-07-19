@@ -1,4 +1,4 @@
-package com.qf.utils;
+package com.qf.network;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;

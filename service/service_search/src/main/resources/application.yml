@@ -9,6 +9,7 @@ dubbo:
   consumer:
     check: false
     timeout: 10000
+    retries: 0
 spring:
   data:
     solr:

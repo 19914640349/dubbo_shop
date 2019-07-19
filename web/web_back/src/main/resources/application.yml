@@ -16,7 +16,7 @@ dubbo:
   consumer:
     check: false
     timeout: 10000
-    retries: 3
+    retries: 0
 
 #自定义一个文件上传路径
 upload:

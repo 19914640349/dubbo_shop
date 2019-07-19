@@ -7,7 +7,7 @@ dubbo:
     address: zookeeper://192.168.245.199:2181
   consumer:
     timeout: 10000
-    retries: 3
+    retries: 0
 spring:
   rabbitmq:
     host: 192.168.245.199

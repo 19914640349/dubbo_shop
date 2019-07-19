@@ -1,0 +1,20 @@
+server:
+  port: 8084
+spring:
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.245.199
+    password: root
+  rabbitmq:
+    host: 192.168.245.199
+    virtual-host: /
+dubbo:
+  application:
+    name: web_sso
+  registry:
+    address: zookeeper://192.168.245.199:2181
+  consumer:
+    check: false
+    timeout: 10000
+    retries: 0

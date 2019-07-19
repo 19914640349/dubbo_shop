@@ -1,0 +1,8 @@
+spring:
+  rabbitmq:
+    host: 192.168.245.199
+    virtual-host: /
+  mail:
+    host: smtp.sina.com
+    username: Lonely085@sina.com
+    password: gf19914640349

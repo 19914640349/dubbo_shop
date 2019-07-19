@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/shop
+dubbo:
+  application:
+    name: service_backuser
+  registry:
+    address: zookeeper://192.168.245.199:2181
+  protocol:
+    port: -1
+    name: dubbo
+  consumer:
+    check: false
+    timeout: 10000
+    retries: 0
