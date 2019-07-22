@@ -72,16 +72,18 @@
 		<div class="login-form fr">
 			<div class="form-hd">
 				<h3>用户登录</h3>
+				<div th:if="${#request.getParameter('error') == '-1'}" style="color: red;text-align: center">用户名或密码错误</div>
 			</div>
 			<div class="form-bd">
-				<form action="" method="POST">
+				<form action="/sso/login" method="POST">
+					<input type="hidden" name="returnUrl" th:value="${#request.getParameter('returnUrl')}">
 					<dl>
 						<dt>用户名</dt>
-						<dd><input type="text" name="user" class="text" /></dd>
+						<dd><input type="text" name="username" class="text" /></dd>
 					</dl>
 					<dl>
 						<dt>密&nbsp;&nbsp;&nbsp;&nbsp;码</dt>
-						<dd><input type="password" name="pwd" class="text"/></dd>
+						<dd><input type="password" name="password" class="text"/></dd>
 					</dl>
 					<dl>
 						<dt>验证码</dt>
@@ -89,7 +91,7 @@
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>
-						<dd><input type="submit" value="登  录" class="submit"/> <a href="" class="forget">忘记密码?</a></dd>
+						<dd><input type="submit" value="登  录" class="submit"/> <a href="/sso/toForgetPassword" class="forget">忘记密码?</a></dd>
 					</dl>
 				</form>
 				<dl>

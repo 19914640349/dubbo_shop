@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<base th:href="${#request.getContextPath() + '/'}"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -13,6 +12,10 @@
         <script type="text/javascript" src="js/topNav.js" ></script>
         <script type="text/javascript" src="js/focus.js" ></script>
         <script type="text/javascript" src="js/shop_home_tab.js" ></script>
+
+        <!-- 引入验证是否登录的js -->
+        <script src="http://localhost:8084/js/login.js"></script>
+
 </head>
 <body>
 	<!-- Header  -wll-2013/03/24 -->
@@ -22,9 +25,7 @@
 			<div class="shop_hd_topNav_all">
 				<!-- Header TopNav Left -->
 				<div class="shop_hd_topNav_all_left">
-					<p>您好，欢迎来到<b><a href="/">ShopCZ商城</a></b>
-                        [<a th:href="|http://localhost:8084/sso/toLogin|">登录</a>]
-                        [<a th:href="|http://localhost:8084/sso/toRegister|">注册</a>]</p>
+					<p id="checkLogin"></p>
 				</div>
 				<!-- Header TopNav Left End -->
 

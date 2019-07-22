@@ -14,4 +14,9 @@ public interface IUserService {
 
     int register(User user);
 
+    User queryByUsername(String username);
+
+    int resetPassword(String username, String password);
+
+    User login(String username, String password);
 }
