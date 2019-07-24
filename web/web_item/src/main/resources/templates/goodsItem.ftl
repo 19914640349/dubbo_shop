@@ -15,6 +15,30 @@
 
     <!-- 引入验证是否登录的js -->
     <script src="http://localhost:8084/js/login.js"></script>
+
+    <!-- 引入购物车列表 -->
+    <script src="http://localhost:8085/js/cart.js"></script>
+
+    <script type="text/javascript">
+        // 添加到购物车
+        $(function () {
+            $("#insertCart").click(function () {
+                var gid = ${goods.id};
+                var gnumber = $("#good_nums").val();
+                $.ajax({
+                    url: "http://localhost:8085/cart/addCart?gnumber=" + gnumber + "&gid=" + gid,
+                    dataType: "jsonp",
+                    jsonpCallback: "addCartCallback",
+                    success: function (data) {
+                        if (data != null) {
+                            location.reload();
+                        }
+                    }
+                });
+            })
+        })
+    </script>
+
 </head>
 <body>
 <!-- Header  -wll-2013/03/24 -->
@@ -58,15 +82,9 @@
 
                     <li>
                         <div class="topNav_menu">
-                            <a href="#" class="topNavHover">购物车<b>0</b>种商品<i></i></a>
+                            <a href="#" class="topNavHover">购物车<b id="cartnum">0</b>种商品<i></i></a>
                             <div class="topNav_menu_bd" style="display:none;">
-                                <!--
-                                <ul>
-                                  <li><a title="已售出的商品" target="_top" href="#">已售出的商品</a></li>
-                                  <li><a title="销售中的商品" target="_top" href="#">销售中的商品</a></li>
-                                </ul>
-                                -->
-                                <p>还没有商品，赶快去挑选！</p>
+                                <p id="cartid">还没有商品，赶快去挑选！</p>
                             </div>
                         </div>
                     </li>
@@ -140,7 +158,7 @@
                     <!-- 单个菜单项 -->
                     <li id="cat_1" class="">
                         <h3><a href="" title="男女服装">男女服装</a></h3>
-                        <div id="cat_1_menu" class="cat_menu clearfix" style="">
+                        <div  class="cat_menu clearfix" style="">
                             <dl class="clearfix">
                                 <dt><a href="女装" href="">女装</a></dt>
                                 <dd>
@@ -181,7 +199,7 @@
                     <!-- 单个菜单项 End -->
                     <li id="cat_2" class="">
                         <h3><a href="" title="鞋包配饰">鞋包配饰</a></h3>
-                        <div id="cat_1_menu" class="cat_menu clearfix" style="">
+                        <div  class="cat_menu clearfix" style="">
                             <dl class="clearfix">
                                 <dt><a href="鞋子" href="">鞋子</a></dt>
                                 <dd>
@@ -222,7 +240,7 @@
 
                     <li id="cat_3" class="">
                         <h3><a href="" title="美容美妆">美容美妆</a></h3>
-                        <div id="cat_1_menu" class="cat_menu clearfix" style="">
+                        <div  class="cat_menu clearfix" style="">
                             <dl class="clearfix">
                                 <dt><a href="美容" href="">美容</a></dt>
                                 <dd>
@@ -263,7 +281,7 @@
 
                     <li id="cat_4" class="">
                         <h3><a href="" title="美容美妆">美容美妆</a></h3>
-                        <div id="cat_1_menu" class="cat_menu clearfix" style="">
+                        <div  class="cat_menu clearfix" style="">
                             <dl class="clearfix">
                                 <dt><a href="美容" href="">美容</a></dt>
                                 <dd>
@@ -304,7 +322,7 @@
 
                     <li id="cat_5" class="">
                         <h3><a href="" title="美容美妆">美容美妆</a></h3>
-                        <div id="cat_1_menu" class="cat_menu clearfix" style="">
+                        <div  class="cat_menu clearfix" style="">
                             <dl class="clearfix">
                                 <dt><a href="美容" href="">美容</a></dt>
                                 <dd>
@@ -345,7 +363,7 @@
 
                     <li id="cat_6" class="">
                         <h3><a href="" title="美容美妆">美容美妆</a></h3>
-                        <div id="cat_1_menu" class="cat_menu clearfix" style="">
+                        <div  class="cat_menu clearfix" style="">
                             <dl class="clearfix">
                                 <dt><a href="美容" href="">美容</a></dt>
                                 <dd>
@@ -385,7 +403,7 @@
                     </li>
                     <li id="cat_7" class="">
                         <h3><a href="" title="美容美妆">美容美妆</a></h3>
-                        <div id="cat_1_menu" class="cat_menu clearfix" style="">
+                        <div  class="cat_menu clearfix" style="">
                             <dl class="clearfix">
                                 <dt><a href="美容" href="">美容</a></dt>
                                 <dd>
@@ -425,7 +443,7 @@
                     </li>
                     <li id="cat_8" class="">
                         <h3><a href="" title="美容美妆">美容美妆</a></h3>
-                        <div id="cat_1_menu" class="cat_menu clearfix" style="">
+                        <div  class="cat_menu clearfix" style="">
                             <dl class="clearfix">
                                 <dt><a href="美容" href="">美容</a></dt>
                                 <dd>
@@ -599,11 +617,15 @@
                 </li>
                 <li class="goods_num">
                     <label>购买数量：</label>
-                    <span><a class="good_num_jian" id="good_num_jian" href="javascript:void(0);"></a><input type="text" value="1" id="good_nums" class="good_nums" /><a href="javascript:void(0);" id="good_num_jia" class="good_num_jia"></a>(当前库存0件)</span>
+                    <span>
+                        <a class="good_num_jian" id="good_num_jian" href="javascript:void(0);"></a>
+                        <input type="text" value="1" id="good_nums" class="good_nums" />
+                        <a href="javascript:void(0);" id="good_num_jia" class="good_num_jia"></a>
+                    </span>
                 </li>
                 <li style="padding:20px 0;">
                     <label>&nbsp;</label>
-                    <span><a href="" class="goods_sub goods_sub_gou" >加入购物车</a></span>
+                    <span><a class="goods_sub goods_sub_gou" id="insertCart" >加入购物车</a></span>
                 </li>
             </ul>
         </div>

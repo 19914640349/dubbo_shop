@@ -16,6 +16,9 @@
         <!-- 引入验证是否登录的js -->
         <script src="http://localhost:8084/js/login.js"></script>
 
+        <!-- 引入购物车列表 -->
+        <script src="http://localhost:8085/js/cart.js"></script>
+
 </head>
 <body>
 	<!-- Header  -wll-2013/03/24 -->
@@ -59,15 +62,9 @@
 
 						<li>
 							<div class="topNav_menu">
-								<a href="#" class="topNavHover">购物车<b>0</b>种商品<i></i></a>
+								<a href="http://localhost:8085/cart/cartList" class="topNavHover">购物车<b id="cartnum">0</b>种商品<i></i></a>
 								<div class="topNav_menu_bd" style="display:none;">
-									<!--
-						            <ul>
-						              <li><a title="已售出的商品" target="_top" href="#">已售出的商品</a></li>
-						              <li><a title="销售中的商品" target="_top" href="#">销售中的商品</a></li>
-						            </ul>
-						        	-->
-						            <p>还没有商品，赶快去挑选！</p>
+						            <p id="cartid">还没有商品，赶快去挑选！</p>
 						        </div>
 							</div>
 						</li>

@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.qf.entity.Email;
 import com.qf.entity.User;
+import com.qf.service.ICartService;
 import com.qf.service.IUserService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class SsoController {
 
     @Reference
     private IUserService userService;
+
+    @Reference
+    private ICartService cartService;
 
     /**
      * 跳转到注册页面
@@ -219,9 +223,10 @@ public class SsoController {
      * @return
      */
     @RequestMapping("/login")
-    public String login(String username, String password, String returnUrl, HttpServletResponse response) {
-        User user = userService.login(username, password);
+    public String login(@CookieValue(name = "cartToken", required = false) String cartToken,
+            String username, String password, String returnUrl, HttpServletResponse response) {
 
+        User user = userService.login(username, password);
         // 登录失败，重定向到登录页面
         if (user == null) {
             return "redirect:/sso/toLogin?error=-1";
@@ -237,6 +242,16 @@ public class SsoController {
         // 登录成功，把用户存到redis中，保存7天
         redisTemplate.opsForValue().set(token, user);
         redisTemplate.expire(token, 7, TimeUnit.DAYS);
+
+        // 合并未登录时的购物车
+        int result = cartService.mergeCart(cartToken, user);
+        if (result == 1) {
+            // 清除临时购物车的cookie
+            Cookie cartCookie = new Cookie("cartToken", "");
+            cartCookie.setMaxAge(0);
+            cartCookie.setPath("/");
+            response.addCookie(cartCookie);
+        }
 
         // 返回到登录前的页面
         return "redirect:" + returnUrl;

@@ -1,14 +1,23 @@
 package com.qf.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.qf.entity.Goods;
 import com.qf.service.IGoodsService;
 import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * FileName: ItemController.java
@@ -37,7 +46,7 @@ public class ItemController {
     public void createItem(Integer id, HttpServletRequest request){
 
         // 根据id获得商品信息
-        /*Goods goods = goodsService.queryGoodsById(id);
+        Goods goods = goodsService.queryGoodsById(id);
 
         // 根据goodsItem.ftl生成商品静态页面
         try {
@@ -64,7 +73,7 @@ public class ItemController {
             }
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
 }

@@ -1,0 +1,17 @@
+server:
+  port: 8085
+spring:
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.245.199
+    password: root
+dubbo:
+  application:
+    name: web_cart
+  registry:
+    address: zookeeper://192.168.245.199:2181
+  consumer:
+    check: false
+    timeout: 10000
+    retries: 0
