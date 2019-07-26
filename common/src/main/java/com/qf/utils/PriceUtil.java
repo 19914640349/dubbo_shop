@@ -1,4 +1,4 @@
-package com.qf.arithmetic;
+package com.qf.utils;
 
 import com.qf.entity.ShopCart;
 

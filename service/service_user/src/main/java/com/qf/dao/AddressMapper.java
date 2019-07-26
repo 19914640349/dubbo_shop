@@ -12,4 +12,7 @@ import com.qf.entity.Address;
  * @date 2019/7/24 21:14
  */
 public interface AddressMapper extends BaseMapper<Address> {
+
+    int insertAddress(Address address);
+
 }

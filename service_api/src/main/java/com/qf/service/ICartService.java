@@ -20,4 +20,6 @@ public interface ICartService {
     List<ShopCart> queryCartList(User user, String cartToken);
 
     int mergeCart(String cartToken, User user);
+
+    int clearCartByUid(Integer uid);
 }

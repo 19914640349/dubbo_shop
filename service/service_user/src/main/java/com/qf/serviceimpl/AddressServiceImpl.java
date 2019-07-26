@@ -24,7 +24,8 @@ public class AddressServiceImpl implements IAddressService {
     private AddressMapper addressMapper;
 
     /**
-     * 根据用户id获取收货地址
+     * 根据用户id获取此用户的所有收货地址
+     *
      * @param uid
      * @return
      */
@@ -33,5 +34,27 @@ public class AddressServiceImpl implements IAddressService {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("uid", uid);
         return addressMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * 添加收货地址
+     *
+     * @param address
+     * @return
+     */
+    @Override
+    public int insertAddress(Address address) {
+        return addressMapper.insertAddress(address);
+    }
+
+    /**
+     * 根据id查询收货地址
+     *
+     * @param aid
+     * @return
+     */
+    @Override
+    public Address queryByAid(Integer aid) {
+        return addressMapper.selectById(aid);
     }
 }

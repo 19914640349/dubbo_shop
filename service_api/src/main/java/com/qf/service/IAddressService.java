@@ -16,4 +16,7 @@ public interface IAddressService {
 
     List<Address> queryAddressByUid(Integer uid);
 
+    int insertAddress(Address address);
+
+    Address queryByAid(Integer aid);
 }

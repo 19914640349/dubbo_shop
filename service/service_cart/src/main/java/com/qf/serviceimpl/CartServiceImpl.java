@@ -40,7 +40,7 @@ public class CartServiceImpl implements ICartService {
      * 添加到购物车
      *
      * @param shopCart  购物车
-     * @param user  用户信息
+     * @param user      用户信息
      * @param cartToken 购物车cookie
      * @return
      */
@@ -70,6 +70,7 @@ public class CartServiceImpl implements ICartService {
 
     /**
      * 查询购物车列表
+     *
      * @param user
      * @param cartToken
      * @return
@@ -108,6 +109,7 @@ public class CartServiceImpl implements ICartService {
 
     /**
      * 登录后合并临时购物车
+     *
      * @param cartToken
      * @param user
      * @return
@@ -131,5 +133,18 @@ public class CartServiceImpl implements ICartService {
 
         }
         return 0;
+    }
+
+    /**
+     * 清空购物车
+     *
+     * @param uid
+     * @return
+     */
+    @Override
+    public int clearCartByUid(Integer uid) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("uid", uid);
+        return cartMapper.delete(queryWrapper);
     }
 }

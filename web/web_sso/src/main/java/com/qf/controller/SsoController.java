@@ -254,6 +254,9 @@ public class SsoController {
         }
 
         // 返回到登录前的页面
+        if (returnUrl == null || returnUrl == "") {
+            return "redirect:http://localhost:8081/front/toHome";
+        }
         return "redirect:" + returnUrl;
     }
 

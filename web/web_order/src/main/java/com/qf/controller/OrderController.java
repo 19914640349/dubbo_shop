@@ -2,12 +2,14 @@ package com.qf.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qf.aop.IsLogin;
-import com.qf.arithmetic.PriceUtil;
 import com.qf.entity.Address;
+import com.qf.entity.Order;
 import com.qf.entity.ShopCart;
 import com.qf.entity.User;
 import com.qf.service.IAddressService;
 import com.qf.service.ICartService;
+import com.qf.service.IOrderService;
+import com.qf.utils.PriceUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,15 @@ public class OrderController {
     @Reference
     private ICartService cartService;
 
+    @Reference
+    private IOrderService orderService;
+
+    /**
+     * 跳转到下单页面
+     * @param user
+     * @param model
+     * @return
+     */
     @RequestMapping("/toOrderEdit")
     @IsLogin(mustLogin = true)
     public String toOrderEdit(User user, Model model){
@@ -52,11 +63,16 @@ public class OrderController {
         return "orderEdit";
     }
 
+    /**
+     * 下单
+     * @param user
+     * @param aid
+     * @return
+     */
     @RequestMapping("/addOrder")
     @IsLogin(mustLogin = true)
     public String addOrder(User user, Integer aid){
-        System.out.println(user);
-        System.out.println(aid);
-        return "";
+        Order order = orderService.addOrderByUid(user, aid);
+        return "redirect:http://localhost:8087/pay/aliPay?orderId=" + order.getOrderid();
     }
 }

@@ -671,7 +671,7 @@
             <div class="shop_bd_shdz_lists clearfix">
                 <ul th:each="address : ${addressList}">
                     <li>
-                        <label>寄送至：<span><input type="radio" name="aid" th:value="${address.id}" th:checked="${address.isDefault == 1 ? 'true' : 'false'}" /></span></label>
+                        <label>寄送至：<span><input type="radio" name="aid" th:value="${address.id}" th:checked="${address.isdefault == 1 ? 'true' : 'false'}" /></span></label>
                         <em th:text="${address.address}">回龙观东大街</em>
                         <em th:text="${address.person}">王超平(收)</em>
                         <em th:text="${address.phone}">1336699232</em>
@@ -682,12 +682,15 @@
             <div id="new_add_shdz_contents" style="display:none;" class="shop_bd_shdz_new clearfix">
                 <div class="title">新增收货地址</div>
                 <div class="shdz_new_form">
-                    <form>
+                    <form action="/address/insertAddress" method="post">
                         <ul>
-                            <li><label><span>*</span>收货人姓名：</label><input type="text" class="name"/></li>
-                            <li><label><span>*</span>详细地址：</label><input type="text" class="xiangxi"/></li>
-                            <li><label><span></span>电话：</label><input type="text" class="dianhua"/></li>
-                            <li><label><span></span>手机号：</label><input type="text" class="shouji"/></li>
+                            <li><label><span>*</span>收货人姓名：</label><input type="text" name="person" class="name"/></li>
+                            <li><label><span>*</span>详细地址：</label><input type="text" name="address" class="xiangxi"/></li>
+                            <li><label><span>*</span>手机号：</label><input type="text" name="phone" class="shouji"/></li>
+                            <li><label><span></span>是否默认地址：</label>
+                                <input type="radio" name="isdefault" value="1"/>是
+                                <input type="radio" name="isdefault" value="0" checked="checked"/>否
+                            </li>
                             <li><label>&nbsp;</label><input type="submit" value="增加收货地址"/></li>
                         </ul>
                     </form>

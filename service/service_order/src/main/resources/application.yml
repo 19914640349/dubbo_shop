@@ -1,0 +1,36 @@
+spring:
+  #数据源1
+  orderdb1:
+    datasource:
+      url: jdbc:mysql:///shop_orderdb1
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      keyWord: orderdb1
+  #数据源2
+  orderdb2:
+    datasource:
+      url: jdbc:mysql:///shop_orderdb2
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      keyWord: orderdb2
+  redis:
+    host: 192.168.245.199
+    password: root
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+
+dubbo:
+  application:
+    name: service_order
+  registry:
+    address: zookeeper://192.168.245.199:2181
+  protocol:
+    port: -1
+    name: dubbo
+  consumer:
+    check: false
+    timeout: 10000
+    retries: 0

@@ -7,23 +7,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * FileName: Address.java
+ * FileName: Order.java
  * Desc:
  *
  * @author gf
  * @version V1.0
- * @date 2019/7/24 19:39
+ * @date 2019/7/25 22:04
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Address implements Serializable {
+public class Order implements Serializable {
 
-    @TableId(type = IdType.AUTO)
-    private Integer id;
+    @TableId(type = IdType.INPUT)
+    private String orderid;
 
     private Integer uid;
 
@@ -33,7 +34,11 @@ public class Address implements Serializable {
 
     private String phone;
 
-    private Integer isdefault = 0;
+    private BigDecimal allprice;
 
     private Date createtime;
+
+    // 0：待支付   1：待发货   2：待收货   3：已收货:
+    private Integer status;
+
 }
