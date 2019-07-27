@@ -3,15 +3,13 @@
 <head>
 	<base th:href="${#request.getContextPath() + '/'}"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>购物车页面</title>
+	<title>个人中心</title>
 	<link rel="stylesheet" href="css/base.css" type="text/css" />
 	<link rel="stylesheet" href="css/shop_common.css" type="text/css" />
 	<link rel="stylesheet" href="css/shop_header.css" type="text/css" />
-	<link rel="stylesheet" href="css/shop_gouwuche.css" type="text/css" />
+	<link rel="stylesheet" href="css/shop_manager.css" type="text/css" />
     <script type="text/javascript" src="js/jquery.js" ></script>
     <script type="text/javascript" src="js/topNav.js" ></script>
-    <script type="text/javascript" src="js/jquery.goodnums.js" ></script>
-    <script type="text/javascript" src="js/shop_gouwuche.js" ></script>
 
 	<!-- 引入验证是否登录的js -->
 	<script src="http://localhost:8084/js/login.js"></script>
@@ -44,7 +42,7 @@
 						              <li><a title="已买到的商品" target="_top" href="#">已买到的商品</a></li>
 						              <li><a title="个人主页" target="_top" href="#">个人主页</a></li>
 						              <li><a title="我的好友" target="_top" href="#">我的好友</a></li>
-										<li><a title="我的订单" target="_top" href="http://localhost:8086/order/orderList">我的订单</a></li>
+										<li><a title="我的订单" target="_top" href="/order/orderList">我的订单</a></li>
 						            </ul>
 						        </div>
 							</div>
@@ -131,7 +129,7 @@
 		<!-- Header Menu -->
 		<div class="shop_hd_menu">
 			<!-- 所有商品菜单 -->
-
+                        
 			<div id="shop_hd_menu_all_category" class="shop_hd_menu_all_category"><!-- 首页去掉 id="shop_hd_menu_all_category" 加上clsss shop_hd_menu_hover -->
 				<div class="shop_hd_menu_all_category_title"><h2 title="所有商品分类"><a href="javascript:void(0);">所有商品分类</a></h2><i></i></div>
 				<div id="shop_hd_menu_all_category_hd" class="shop_hd_menu_all_category_hd">
@@ -141,7 +139,7 @@
 							<h3><a title="男女服装">男女服装</a></h3>
 							<div class="cat_menu clearfix" style="">
 								<dl class="clearfix">
-									<dt><a>女装</a></dt>
+									<dt><a href="女装">女装</a></dt>
 									<dd>
 										<a>风衣</a>
 										<a>长袖连衣裙</a>
@@ -157,7 +155,7 @@
                                                                                 <a>毛呢短裤</a>
 									</dd>
 								</dl>
-
+                                                            
                                                                 <dl class="clearfix">
 									<dt><a href="男装">男装</a></dt>
 									<dd>
@@ -198,7 +196,7 @@
                                                                                 <a>毛呢短裤</a>
 									</dd>
 								</dl>
-
+                                                            
                                                                 <dl class="clearfix">
 									<dt><a href="包包">包包</a></dt>
 									<dd>
@@ -218,7 +216,7 @@
 								</dl>
                                                     </div>
                                                 </li>
-
+                                                
                                                 <li id="cat_3" class="">
                                                     <h3><a title="美容美妆">美容美妆</a></h3>
                                                     <div class="cat_menu clearfix" style="">
@@ -239,7 +237,7 @@
                                                                                 <a>毛呢短裤</a>
 									</dd>
 								</dl>
-
+                                                            
                                                                 <dl class="clearfix">
 									<dt><a href="美妆">美妆</a></dt>
 									<dd>
@@ -259,7 +257,7 @@
 								</dl>
                                                     </div>
                                                 </li>
-
+                                                
                                                 <li id="cat_4" class="">
                                                     <h3><a title="美容美妆">美容美妆</a></h3>
                                                     <div class="cat_menu clearfix" style="">
@@ -280,7 +278,7 @@
                                                                                 <a>毛呢短裤</a>
 									</dd>
 								</dl>
-
+                                                            
                                                                 <dl class="clearfix">
 									<dt><a href="美妆">美妆</a></dt>
 									<dd>
@@ -300,7 +298,7 @@
 								</dl>
                                                     </div>
                                                 </li>
-
+                                                
                                                 <li id="cat_5" class="">
                                                     <h3><a title="美容美妆">美容美妆</a></h3>
                                                     <div class="cat_menu clearfix" style="">
@@ -321,7 +319,7 @@
                                                                                 <a>毛呢短裤</a>
 									</dd>
 								</dl>
-
+                                                            
                                                                 <dl class="clearfix">
 									<dt><a href="美妆">美妆</a></dt>
 									<dd>
@@ -341,7 +339,7 @@
 								</dl>
                                                     </div>
                                                 </li>
-
+                                                
                                                 <li id="cat_6" class="">
                                                     <h3><a title="美容美妆">美容美妆</a></h3>
                                                     <div class="cat_menu clearfix" style="">
@@ -362,7 +360,7 @@
                                                                                 <a>毛呢短裤</a>
 									</dd>
 								</dl>
-
+                                                            
                                                                 <dl class="clearfix">
 									<dt><a href="美妆">美妆</a></dt>
 									<dd>
@@ -402,7 +400,7 @@
                                                                                 <a>毛呢短裤</a>
 									</dd>
 								</dl>
-
+                                                            
                                                                 <dl class="clearfix">
 									<dt><a href="美妆">美妆</a></dt>
 									<dd>
@@ -442,7 +440,7 @@
                                                                                 <a>毛呢短裤</a>
 									</dd>
 								</dl>
-
+                                                            
                                                                 <dl class="clearfix">
 									<dt><a href="美妆">美妆</a></dt>
 									<dd>
@@ -490,85 +488,93 @@
 		<span>
 			<a>首页</a>&nbsp;›&nbsp;
 			<a>我的商城</a>&nbsp;›&nbsp;
-			<a>我的购物车</a>
+			<a>已买到商品</a>
 		</span>
 	</div>
 	<div class="clear"></div>
 	<!-- 面包屑 End -->
 
-	<!-- Header End -->
+	<!-- Header End -->	
 
-	<!-- 购物车 Body -->
-	<div class="shop_gwc_bd clearfix">
-		<!-- 在具体实现的时候，根据情况选择其中一种情况 -->
-		<!-- 购物车为空 -->
-		<div th:if="${cartList == null || #arrays.length(cartList) == 0}" class="empty_cart mb10">
-			<div class="message">
-				<p>购物车内暂时没有商品，您可以<a href="http://localhost:8081/front/toHome">去首页</a>挑选喜欢的商品</p>
+	<!-- 我的个人中心 -->
+	<div class="shop_member_bd clearfix">
+		<!-- 左边导航 -->
+		<div class="shop_member_bd_left clearfix">
+			
+			<div class="shop_member_bd_left_pic">
+				<a href="javascript:void(0);"><img src="images/avatar.png" /></a>
+			</div>
+			<div class="clear"></div>
+
+			<dl>
+				<dt>我的交易</dt>
+				<dd><span><a>已购买商品</a></span></dd>
+				<dd><span><a>我的收藏</a></span></dd>
+				<dd><span><a>评价管理</a></span></dd>
+			</dl>
+
+			<dl>
+				<dt>我的账户</dt>
+				<dd><span><a>个人资料</a></span></dd>
+				<dd><span><a>收货地址</a></span></dd>
+			</dl>
+
+		</div>
+		<!-- 左边导航 End -->
+		
+		<!-- 右边购物列表 -->
+		<div class="shop_member_bd_right clearfix">
+			
+			<div class="shop_meber_bd_good_lists clearfix">
+				<div class="title"><h3>订单列表</h3></div>
+				<table>
+					<thead class="tab_title">
+						<th style="width:410px;"><span>商品信息</span></th>
+						<th style="width:100px;"><span>单价</span></th>
+						<th style="width:80px;"><span>数量</span></th>
+						<th style="width:100px;"><span>订单总价</span></th>
+						<th style="width:115px;"><span>状态与操作</span></th>
+					</thead>
+					<tbody>
+
+                        <!-- 循环订单 -->
+                        <tr th:each="order : ${orderList}">
+                            <td colspan="5">
+                                <table class="good">
+                                    <thead >
+                                    <tr><th colspan="6">
+                                        <span><strong>订单号码：</strong><span th:text="${order.orderid}">2013032905510051</span></span>
+                                    </th></tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- 循环订单详情 -->
+                                    <tr th:each="detail,detailState : ${order.orderDetails}">
+                                        <td class="dingdan_pic"><img th:src="|http://192.168.245.199:8080/${#strings.listSplit(detail.gimage, '|')[0]}|" src="images/1dbc94fa0d60cba3990b89ccb01f82c2.jpg_tiny.jpg" /></td>
+                                        <td class="dingdan_title" th:text="${detail.gname}"><span><a >李宁 lining 专柜正品 足球鞋 女式运动鞋【演示数据】</a></span><br />鞋码:37 颜色:黑色 </td>
+                                        <td class="dingdan_danjia"><strong th:text="${detail.gprice}">25.00</strong></td>
+                                        <td class="dingdan_shuliang" th:text="${detail.gnumber}">1</td>
+                                        <td class="dingdan_zongjia" th:if="${detailState.first}" th:rowspan="${#lists.size(order.orderDetails)}"><strong th:text="${detail.sprice}">25.00</strong><br />(免运费)</td>
+                                        <td class="digndan_caozuo" th:if="${detailState.first}" th:rowspan="${#lists.size(order.orderDetails)}" th:switch="${order.status}">
+                                            <span th:case="0">待付款<br/>
+                                                <a th:href="|http://localhost:8087/pay/aliPay?orderId=${order.orderid}|">去付款</a></span>
+                                            <span th:case="1">待发货</span>
+                                            <span th:case="2">待收货</span>
+                                            <span th:case="3">已收货</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+					</tbody>
+				</table>
 			</div>
 		</div>
-		<!-- 购物车为空 end-->
-
-		<!-- 购物车有商品 -->
-		<div th:unless="${cartList == null || #arrays.length(cartList) == 0}" class="shop_gwc_bd_contents clearfix">
-			<!-- 购物流程导航 -->
-			<div class="shop_gwc_bd_contents_lc clearfix">
-				<ul>
-					<li class="step_a hover_a">确认购物清单</li>
-					<li class="step_b">确认收货人资料及送货方式</li>
-					<li class="step_c">购买完成</li>
-				</ul>
-			</div>
-			<!-- 购物流程导航 End -->
-
-			<!-- 购物车列表 -->
-			<table>
-				<thead>
-					<tr>
-						<th colspan="2"><span>商品</span></th>
-						<th><span>单价(元)</span></th>
-						<th><span>数量</span></th>
-						<th><span>小计</span></th>
-						<th><span>操作</span></th>
-					</tr>
-				</thead>
-				<tbody>
-
-					<tr th:each="cart : ${cartList}">
-						<td class="gwc_list_pic"><a><img th:src="|http://192.168.245.199:8080/${#strings.listSplit(cart.goods.gimage, '|')[0]}|" style="width: 120px; height: 90px" /></a></td>
-						<td class="gwc_list_title"><a th:text="${cart.goods.gname}">双层花架简约韩式田园欧式地中海风格宜家纯白架现代花盆架电话架 </a></td>
-						<td class="gwc_list_danjia"><span><strong th:text="${#numbers.formatCurrency(cart.goods.gprice)}" th:id="|danjia_${cart.goods.id}|">2550.00</strong></span></td>
-						<td class="gwc_list_shuliang">
-							<span>
-								<a class="good_num_jian this_good_nums" th:did="|danjia_${cart.goods.id}|" th:xid="|xiaoji_${cart.goods.id}|" ty="-" th:valId="|goods_${cart.goods.id}|" href="javascript:void(0);">-</a>
-								<input type="text" th:value="${cart.gnumber}" th:id="|goods_${cart.goods.id}|" class="good_nums" />
-								<a href="javascript:void(0);" th:did="|danjia_${cart.goods.id}|" th:xid="|xiaoji_${cart.goods.id}|" ty="+" class="good_num_jia this_good_nums" th:valId="|goods_${cart.goods.id}|">+</a>
-							</span>
-						</td>
-						<td class="gwc_list_xiaoji"><span><strong th:text="${#numbers.formatCurrency(cart.sprice)}" th:id="|xiaoji_${cart.goods.id}|" class="good_xiaojis">2550.00</strong></span></td>
-						<td class="gwc_list_caozuo"><a>收藏</a><a href="javascript:void(0);" class="shop_good_delete">删除</a></td>
-					</tr>
-
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="6">
-							<div class="gwc_foot_zongjia">商品总价(不含运费)<span><strong th:text="${#numbers.formatCurrency(totalPrice)}" id="good_zongjia">12750.00</strong></span></div>
-							<div class="clear"></div>
-							<div class="gwc_foot_links">
-								<a class="go">继续购物</a>
-								<a href="http://localhost:8086/order/toOrderEdit" class="op">确认并填写订单</a>
-							</div>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
-			<!-- 购物车列表 End -->
-		</div>
-		<!-- 购物车有商品 end -->
+		<!-- 右边购物列表 End -->
 
 	</div>
-	<!-- 购物车 Body End -->
+	<!-- 我的个人中心 End -->
 
 	<!-- Footer - wll - 2013/3/24 -->
 	<div class="clear"></div>
@@ -583,10 +589,9 @@
                 </p>
             </div>
             <div class="shop_footer_copy">
-                <p>Copyright 2004-2013 itcast Inc.,All rights reserved.</p>
+                 <p>Copyright 2004-2013 itcast Inc.,All rights reserved.</p>
             </div>
         </div>
 	<!-- Footer End -->
-
 </body>
 </html>

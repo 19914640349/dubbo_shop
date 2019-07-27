@@ -17,12 +17,12 @@ public class ServiceOrderApplicationTests {
     @Test
     public void contextLoads() {
 
-        System.out.println(orderUtil.getUId(156785));
-        System.out.println(orderUtil.getUId(16));
+        System.out.println(orderUtil.getFourUid(156785));
+        System.out.println(orderUtil.getFourUid(16));
 
-        System.out.println(orderUtil.createOrderIdByUid(156521));
+        System.out.println(orderUtil.createOIdByFourUid(156521));
 
-        System.out.println(orderUtil.getUidByOid("190726038051"));
+        System.out.println(orderUtil.getFourUidByOid("190726038051"));
 
     }
 

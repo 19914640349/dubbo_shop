@@ -64,6 +64,7 @@
                                     <li><a title="已买到的商品" target="_top" href="#">已买到的商品</a></li>
                                     <li><a title="个人主页" target="_top" href="#">个人主页</a></li>
                                     <li><a title="我的好友" target="_top" href="#">我的好友</a></li>
+                                    <li><a title="我的订单" target="_top" href="http://localhost:8086/order/orderList">我的订单</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -82,7 +83,7 @@
 
                     <li>
                         <div class="topNav_menu">
-                            <a href="#" class="topNavHover">购物车<b id="cartnum">0</b>种商品<i></i></a>
+                            <a href="http://localhost:8085/cart/cartList" class="topNavHover">购物车<b id="cartnum">0</b>种商品<i></i></a>
                             <div class="topNav_menu_bd" style="display:none;">
                                 <p id="cartid">还没有商品，赶快去挑选！</p>
                             </div>

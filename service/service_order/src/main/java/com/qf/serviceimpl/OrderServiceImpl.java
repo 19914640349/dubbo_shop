@@ -55,17 +55,17 @@ public class OrderServiceImpl implements IOrderService {
     public Order addOrderByUid(User user, Integer aid) {
 
         // 获取用户id后4位
-        int uid = Integer.parseInt(orderUtil.getUId(user.getId()));
+        int fourUid = Integer.parseInt(orderUtil.getFourUid(user.getId()));
 
         // 获取订单id
-        String orderId = orderUtil.createOrderIdByUid(uid);
+        String orderId = orderUtil.createOIdByFourUid(fourUid);
 
         // 通过用户id后4位，确认数据库
-        int dbIndex = uid % 2 + 1;
+        int dbIndex = fourUid % 2 + 1;
         DynamicDataSource.set("orderdb" + dbIndex);
 
         // 通过用户id后4位，确认表
-        int tableIndex = uid % 2 / 2 + 1;
+        int tableIndex = fourUid / 2 % 2 + 1;
 
         // 通过地址id获取订单的详细收货地址
         Address address = addressService.queryByAid(aid);
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements IOrderService {
         // 创建一个订单
         Order order = new Order();
         order.setOrderid(orderId);
-        order.setUid(uid);
+        order.setUid(user.getId());
         order.setPerson(address.getPerson());
         order.setAddress(address.getAddress());
         order.setPhone(address.getPhone());
@@ -119,7 +119,29 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * 根据订单id查询详细订单
+     * 查询用户的所有订单
+     * @param uid
+     * @return
+     */
+    @Override
+    public List<Order> queryOrderByUid(Integer uid) {
+
+        // 获取用户id后4位
+        int fourUid = Integer.parseInt(orderUtil.getFourUid(uid));
+
+        // 通过用户id后4位，确认数据库
+        int dbIndex = fourUid % 2 + 1;
+        DynamicDataSource.set("orderdb" + dbIndex);
+
+        // 通过用户id后4位，确认表
+        int tableIndex = fourUid / 2 % 2 + 1;
+
+        return orderMapper.queryOrderByUid(uid, tableIndex);
+
+    }
+
+    /**
+     * 根据订单id查询订单
      * @param orderId
      * @return
      */
@@ -127,14 +149,35 @@ public class OrderServiceImpl implements IOrderService {
     public Order queryOrderByOid(String orderId) {
 
         // 根据订单id查到数据库
-        Integer uid = orderUtil.getUidByOid(orderId);
+        Integer fourUid = orderUtil.getFourUidByOid(orderId);
 
         // 通过用户id后4位，确认数据库
-        int dbIndex = uid % 2 + 1;
+        int dbIndex = fourUid % 2 + 1;
         DynamicDataSource.set("orderdb" + dbIndex);
 
         // 通过用户id后4位，确认表
-        int tableIndex = uid % 2 / 2 + 1;
-        return null;
+        int tableIndex = fourUid / 2 % 2 + 1;
+        return orderMapper.queryOrderByOid(orderId, tableIndex);
+    }
+
+    /**
+     * 修改订单状态
+     * @param orderId
+     * @param status
+     * @return
+     */
+    @Override
+    public int updateOrderStatus(String orderId, int status) {
+
+        // 通过订单id获取用户id
+        Integer fourUid = orderUtil.getFourUidByOid(orderId);
+
+        // 通过用户id后4位，确认数据库
+        int dbIndex = fourUid % 2 + 1;
+        DynamicDataSource.set("orderdb" + dbIndex);
+
+        // 通过用户id后4位，确认表
+        int tableIndex = fourUid / 2 % 2 + 1;
+        return orderMapper.updateOrderStatus(orderId, status, tableIndex);
     }
 }

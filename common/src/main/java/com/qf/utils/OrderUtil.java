@@ -26,7 +26,7 @@ public class OrderUtil {
      * @param uid
      * @return
      */
-    public String getUId(Integer uid){
+    public String getFourUid(Integer uid){
 
         String uidStr = uid + "";
 
@@ -50,7 +50,7 @@ public class OrderUtil {
      * @param uid
      * @return
      */
-    public String createOrderIdByUid(Integer uid){
+    public String createOIdByFourUid(Integer uid){
 
         StringBuffer buffer = new StringBuffer();
         // 拼接当前日期
@@ -58,7 +58,7 @@ public class OrderUtil {
         buffer.append(sdf.format(new Date()));
 
         // 拼接用户id后4位
-        buffer.append(getUId(uid));
+        buffer.append(getFourUid(uid));
 
         // 拼接流水号
         String orderNumber = stringRedisTemplate.opsForValue().get("order_number");
@@ -77,7 +77,7 @@ public class OrderUtil {
      * @param orderId
      * @return
      */
-    public Integer getUidByOid(String orderId){
+    public Integer getFourUidByOid(String orderId){
         String uid = orderId.substring(6, 10);
         return Integer.parseInt(uid);
     }

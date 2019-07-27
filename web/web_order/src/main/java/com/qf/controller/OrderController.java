@@ -75,4 +75,13 @@ public class OrderController {
         Order order = orderService.addOrderByUid(user, aid);
         return "redirect:http://localhost:8087/pay/aliPay?orderId=" + order.getOrderid();
     }
+
+    @RequestMapping("/orderList")
+    @IsLogin(mustLogin = true)
+    public String orderList(User user, Model model){
+        List<Order> orderList = orderService.queryOrderByUid(user.getId());
+        model.addAttribute("orderList", orderList);
+        return "orderList";
+    }
+
 }

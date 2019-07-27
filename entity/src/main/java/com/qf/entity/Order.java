@@ -1,6 +1,7 @@
 package com.qf.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * FileName: Order.java
@@ -38,7 +40,10 @@ public class Order implements Serializable {
 
     private Date createtime;
 
-    // 0：待支付   1：待发货   2：待收货   3：已收货:
+    // 0：待付款   1：待发货   2：待收货   3：已收货
     private Integer status;
+
+    @TableField(exist = false)
+    private List<OrderDetail> orderDetails;
 
 }

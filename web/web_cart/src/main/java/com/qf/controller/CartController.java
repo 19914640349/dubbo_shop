@@ -36,6 +36,7 @@ public class CartController {
 
     /**
      * 添加购物车，使用自定义注解判断是否登录
+     *
      * @param cartToken
      * @param shopCart
      * @param user
@@ -46,7 +47,7 @@ public class CartController {
     @IsLogin
     @ResponseBody
     public String addCart(@CookieValue(name = "cartToken", required = false) String cartToken,
-                          ShopCart shopCart, User user,String callback, HttpServletResponse response){
+                          ShopCart shopCart, User user, String callback, HttpServletResponse response) {
 
         // 判断cookie是否有购物车，没有就创建
         if (cartToken == null) {
@@ -65,6 +66,7 @@ public class CartController {
 
     /**
      * 查询购物车列表
+     *
      * @param cartToken
      * @param user
      * @param callback
@@ -73,16 +75,24 @@ public class CartController {
     @RequestMapping("/showCart")
     @IsLogin
     @ResponseBody
-    public String showCart(@CookieValue(name = "cartToken", required = false) String cartToken, User user, String callback){
+    public String showCart(@CookieValue(name = "cartToken", required = false) String cartToken, User user, String callback) {
 
         // 获得购物车列表
         List<ShopCart> cartList = cartService.queryCartList(user, cartToken);
         return callback != null ? callback + "(" + JSON.toJSONString(cartList) + ")" : JSON.toJSONString(cartList);
     }
 
+    /**
+     * 进入购物车页面
+     *
+     * @param cartToken
+     * @param user
+     * @param model
+     * @return
+     */
     @RequestMapping("/cartList")
     @IsLogin
-    public String cartList(@CookieValue(name = "cartToken", required = false) String cartToken, User user, Model model){
+    public String cartList(@CookieValue(name = "cartToken", required = false) String cartToken, User user, Model model) {
 
         // 获得购物车列表
         List<ShopCart> cartList = cartService.queryCartList(user, cartToken);

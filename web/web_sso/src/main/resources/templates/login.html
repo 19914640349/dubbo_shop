@@ -7,63 +7,36 @@
 	<link rel="stylesheet" href="css/base.css" />
 	<link rel="stylesheet" href="css/global.css" />
 	<link rel="stylesheet" href="css/login-register.css" />
-	
+
+	<!-- 引入登录验证 -->
+	<link rel="stylesheet" href="css/verify.css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/verify.js" ></script>
+	<script type="text/javascript">
+		$(function () {
+			$('#code').slideVerify({
+				type : 1,		//类型
+				vOffset : 5,	//误差量，根据需求自行调整
+				barSize : {
+					width : '100%px',
+					height : '40px',
+				},
+				ready : function() {
+				},
+				success : function() {
+					$("#formid").attr("onsubmit","return true");
+				},
+				error : function() {
+//		        	alert('验证失败！');
+				}
+
+			});
+		})
+	</script>
+
 </head>
 <body>
-	<!--顶部信息start-->
-	<!--
-	<div id="topnav">
-		<div class="topwrap">
-			<dl class="user-entry">
-				<dt>您好，欢迎来到ShopCZ商城<a href=""></a></dt>
-				<dd>[<a href="">登录</a>]</dd>
-				<dd>[<a href="">注册</a>]</dd>
-				<dd></dd>
-			</dl>
-			<ul class="quick-menu">
-				<li class="user-center">
-					<div class="menu">
-						<a href="" class="menu-hd">我的商城</a>
-						<div class="menu-bd">
-							<ul>
-								<li><a href="">已买到的商品</a></li>
-								<li><a href="">我的空间</a></li>
-								<li><a href="">我的好友</a></li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<li class="cart">
-					<div class="menu">
-						<span class="menu-hd">购物车<strong>0</strong>种商品</span>
-						<div class="menu-bd">
-							<div class="no-order">
-								<span>您的购物车中暂无商品，赶快选择心爱的商品吧！</span>
-								<a href="" class="button">查看购物车</a>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="favorite">
-					<div class="menu">
-						<a href="" class="menu-hd">我的收藏</a>
-						<div class="menu-bd">
-							<ul>
-								<li><a href="">收藏的商品</a></li>
-								<li><a href="">收藏的店铺</a></li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<li class="pm">
-					<a href="">站内信</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	-->
-	<!--顶部信息end-->
-	
+
 	<div class="header wrap1000">
 		<a href=""><img src="images/logo.png" alt="" /></a>
 	</div>
@@ -75,7 +48,7 @@
 				<div th:if="${#request.getParameter('error') == '-1'}" style="color: red;text-align: center">用户名或密码错误</div>
 			</div>
 			<div class="form-bd">
-				<form action="/sso/login" method="POST">
+				<form id="formid" action="/sso/login" method="POST" onsubmit="return false">
 					<input type="hidden" name="returnUrl" th:value="${#request.getParameter('returnUrl')}">
 					<dl>
 						<dt>用户名</dt>
@@ -86,8 +59,8 @@
 						<dd><input type="password" name="password" class="text"/></dd>
 					</dl>
 					<dl>
-						<dt>验证码</dt>
-						<dd><input type="text" name="code" class="text" size="10" style="width:58px;"> <img src="images/code.png" alt="" align="absmiddle" style="position:relative;top:-2px;"/> <a href="" style="color:#999;">看不清，换一张</a></dd>
+						<dt></dt>
+						<dd><div id="code"></div></dd>
 					</dl>
 					<dl>
 						<dt>&nbsp;</dt>
@@ -121,7 +94,7 @@
 		<p> <a href="">首页</a> | <a href="">招聘英才</a> | <a href="">广告合作</a> | <a href="">关于ShopCZ</a> | <a href="">联系我们</a></p>
 		<p>Copyright 2004-2013 itcast Inc.,All rights reserved.</p>
 	</div>
-	
-	
+
+
 </body>
 </html>

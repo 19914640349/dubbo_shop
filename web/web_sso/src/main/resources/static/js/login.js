@@ -7,7 +7,7 @@ $(function () {
         jsonpCallback: "loginJson",
         success: function (data) {
             if (data != null) {
-                $("#checkLogin").html(data.nickname + "您好，欢迎来到<b><a href=''>ShopCZ商城</a> <a href='http://localhost:8084/sso/logout'>注销</a>");
+                $("#checkLogin").html(data.nickname + "您好，欢迎来到<b><a href='http://localhost:8081/front/toHome'>ShopCZ商城</a> <a href='http://localhost:8084/sso/logout'>注销</a>");
             } else {
                 $("#checkLogin").html("[<a id='loginJs' onclick='loginJs();' href=''>登录</a>][<a href='http://localhost:8084/sso/toRegister'>注册</a>]");
             }
